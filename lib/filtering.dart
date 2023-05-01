@@ -24,7 +24,7 @@ class _FiltringProductState extends State<FiltringProduct> {
   void initState() {
     super.initState();
     maxPrice = widget.product
-        .map((product) => double.parse(product.price))
+        .map((product) => double.parse(product.category))
         .reduce((value, element) => value > element ? value : element);
     _selectedPrice = RangeValues(0, maxPrice);
   }
@@ -152,7 +152,7 @@ class _FiltringProductState extends State<FiltringProduct> {
                       ],
                     ),
                   ),
-                  Container(
+                  /*Container(
                     child:   Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: SizedBox(
@@ -196,7 +196,7 @@ class _FiltringProductState extends State<FiltringProduct> {
                           ),
                         ),
                       ),
-                    ),)
+                    ),)*/
                 ],
               ),
             ],

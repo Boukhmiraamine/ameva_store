@@ -29,7 +29,7 @@ class CartItemCard extends StatelessWidget {
             Text((cart.product.name), style: TextStyle(fontSize: 16, color: Colors.black,), maxLines : 2),
             const SizedBox(height: 10,),
             Text.rich(
-              TextSpan(text: "${cart.product.price}", style: TextStyle(fontWeight: FontWeight.w600, color: Colors.orangeAccent),
+              TextSpan(text: "${cart.product.category}", style: TextStyle(fontWeight: FontWeight.w600, color: Colors.orangeAccent),
                 children: [
                   TextSpan(
                       text: " x${cart.numOfItems}",

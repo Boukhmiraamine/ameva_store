@@ -1,6 +1,6 @@
 
 
-import '../models/imagemodel.dart';
+import 'imagemodel.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'productmodel.g.dart';

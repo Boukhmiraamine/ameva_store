@@ -1,26 +1,27 @@
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../AddProduct.dart';
-import '../Modules/Product.dart';
-import '../ProductDetail.dart';
-import '../filtering.dart';
-import '../item.dart';
+import '../../Modules/Product.dart';
+import '../../ProductDetail.dart';
+import '../../filtering.dart';
+
 import 'package:badges/src/badge.dart' as badge;
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+import 'item_waiting_products.dart';
+
+class waiting_products extends StatefulWidget {
+  const waiting_products({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<waiting_products> createState() => _waiting_productsState();
 }
 
-class _HomeState extends State<Home> {
+class _waiting_productsState extends State<waiting_products> {
   List<Product> listProduct = [];
 
   Future<void> getProducts() async {
     QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('products').get();
+    await FirebaseFirestore.instance.collection('waiting_products').get();
 
     listProduct = snapshot.docs.map((doc) {
       Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
@@ -61,39 +62,29 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddProductPage()),
-            );
-          });
-        },
-        child: const Icon(Icons.add),
-      ),
+
       appBar: AppBar(
         title: !_showSearchBar
             ? Text(
-                "Ameva Store",
-                style: TextStyle(fontSize: 24),
-              )
+          "Ameva Store",
+          style: TextStyle(fontSize: 24),
+        )
             : TextField(
-                autofocus: true,
-                style: TextStyle(color: Colors.black, fontSize: 18),
-                decoration: InputDecoration(
-                  focusColor: Colors.black,
-                  //hoverColor: Colors.green,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    gapPadding: 20,
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
+            autofocus: true,
+            style: TextStyle(color: Colors.black, fontSize: 18),
+            decoration: InputDecoration(
+              focusColor: Colors.black,
+              //hoverColor: Colors.green,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                gapPadding: 20,
+              ),
+              filled: true,
+              fillColor: Colors.white,
 
-                  hintText: "Search for a product ...",
-                ),
-                onChanged: _filterProducts),
+              hintText: "Search for a product ...",
+            ),
+            onChanged: _filterProducts),
         backgroundColor: Colors.deepPurple,
         actions: [
           IconButton(
@@ -121,7 +112,7 @@ class _HomeState extends State<Home> {
                   child: IconButton(
                     onPressed: () {
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (c) => Home()));
+                          context, MaterialPageRoute(builder: (c) => waiting_products()));
                       setState(() {});
                     },
                     icon: Icon(
@@ -157,8 +148,8 @@ class _HomeState extends State<Home> {
                         setState(() {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return FiltringProduct(product: listProduct);
-                          }));
+                                return FiltringProduct(product: listProduct);
+                              }));
                         });
                       },
                       icon: Icon(
@@ -170,10 +161,10 @@ class _HomeState extends State<Home> {
             height: 20,
           ),
           Expanded(
-            flex: 26,
+            flex: 15,
             child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
-                    .collection('products')
+                    .collection('waiting_products')
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -194,7 +185,7 @@ class _HomeState extends State<Home> {
                       itemBuilder: (BuildContext context, int index) {
                         final product = products[index];
                         return GestureDetector(
-                          child: ProductItem(product),
+                          child: item_waiting_products(product),
                           onTap: () {
                             setState(() {
                               Navigator.push(
@@ -218,4 +209,6 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+
 }

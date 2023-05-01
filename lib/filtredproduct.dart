@@ -18,13 +18,13 @@ class _filtredproductState extends State<filtredproduct> {
   late List<Product> _filteredList;
 
   @override
-  void initState() {
+  /*void initState() {
     super.initState();
     _filteredList = widget.list
         .where((product) => (double.parse(product.price) >= widget.price.start && double.parse(product.price) <= widget.price.end))
         .where((product) => product.category == widget.category)
         .toList();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

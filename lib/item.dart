@@ -23,6 +23,7 @@ Widget ProductItem(Product Product) {
         width: 500,
         child: Column(
           children: [
+
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
               child: Container(
@@ -33,7 +34,7 @@ Widget ProductItem(Product Product) {
                   border: Border.all(color: Colors.black45),
                   shape: BoxShape.rectangle,
                   image: DecorationImage(
-                    image: AssetImage(
+                    image: NetworkImage(
                       Product.image,
                     ),
                     fit: BoxFit.cover,
@@ -62,13 +63,13 @@ Widget ProductItem(Product Product) {
                         children: [
                           Text(
 
-                            "            Price : ",
+                            "",
                             style: TextStyle(fontSize: 19),
 
                           ),
                           Text(
 
-                            "${Product.price} Dhs",
+                            "${Product.category} Dhs",
                             style: TextStyle(fontSize: 19, color: Colors.red,fontWeight: FontWeight.bold),
 
 
@@ -88,7 +89,7 @@ Widget ProductItem(Product Product) {
                   padding: const EdgeInsets.fromLTRB(0.8, 0, 0.8, 0.8),
                   child: SizedBox(
 
-                    width: 170,
+                    width: 140,
                     height: 40,
 
 
@@ -99,13 +100,16 @@ Widget ProductItem(Product Product) {
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple.shade300),
                         ),
                         onPressed: () {
+                          print("****************************************");
+                          print(".."+Product.id);
 
+                          print("****************************************");
 
                         },
                         child: Row(
                           children: [
-                            Icon(Icons.add_circle_outlined),
-                            Text(" Add to panner" ,style: TextStyle(fontSize: 17))
+                            Icon(Icons.send),
+                            Text(" Interested" ,style: TextStyle(fontSize: 17))
                           ],
                         )),
                   ),

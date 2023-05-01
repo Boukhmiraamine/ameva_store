@@ -109,7 +109,7 @@ class _ProductDetailState extends State<ProductDetail> {
                             ),
                             SizedBox(height: 10),
                             Text(
-                              "${widget.product.price} Dhs",
+                              "${widget.product.category} Dhs",
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black87,
@@ -131,7 +131,7 @@ class _ProductDetailState extends State<ProductDetail> {
                             ),
                             SizedBox(height: 10),
                             Text(
-                              widget.product.decription,
+                              widget.product.description,
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black87,

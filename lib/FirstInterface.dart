@@ -7,6 +7,7 @@ import '../Interfaces/About.dart';
 import '../Interfaces/Profile.dart';
 import '../Interfaces/Home.dart';
 import '../Interfaces/Category.dart';
+import 'interfaces/Admin/waiting_products.dart';
 
 class FirstInterface extends StatefulWidget {
   const FirstInterface({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class FirstInterface extends StatefulWidget {
   State<FirstInterface> createState() => _FirstInterfaceState();
 }
 
-var _interfaces = [Home(), Profile(), Category(), About(), AdminScreen()];
+var _interfaces = [Home(), Profile(), Category(), About(), waiting_products()];
 int _currentIndex = 0;
 
 
