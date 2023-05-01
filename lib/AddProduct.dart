@@ -1,7 +1,10 @@
 
 import 'dart:io';
 
+<<<<<<< HEAD
 import 'package:firebase_auth/firebase_auth.dart';
+=======
+>>>>>>> daee684 (Add product to DataBase - admin verification - display prodacts)
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -140,12 +143,15 @@ class _AddProductPageState extends State<AddProductPage> {
 
   void _saveProduct() async {
     try {
+<<<<<<< HEAD
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
         // L'utilisateur n'est pas connecté, traiter le cas d'erreur
         return;
       }
 
+=======
+>>>>>>> daee684 (Add product to DataBase - admin verification - display prodacts)
       final ref = FirebaseStorage.instance
           .ref()
           .child('products')
@@ -156,6 +162,7 @@ class _AddProductPageState extends State<AddProductPage> {
       final url = await ref.getDownloadURL();
       print("----------------*****************************************************");
       print("----------------"+ url);
+<<<<<<< HEAD
       FirebaseFirestore.instance.collection('products').doc().set({
         'name': _productName,
         'description': _productDescription,
@@ -164,11 +171,23 @@ class _AddProductPageState extends State<AddProductPage> {
         'category': _productCategory,
         'publication_date': FieldValue.serverTimestamp(),
         'user_id': user.uid, // Ajouter l'ID de l'utilisateur ici
+=======
+      FirebaseFirestore.instance.collection('waiting_products').doc().set({
+        'name': _productName,
+        'description': _productDescription,
+        'image': url, // add the url variable here
+        'color': _productColor,
+        'category': _productCategory,
+        'publication_date': FieldValue.serverTimestamp(),
+>>>>>>> daee684 (Add product to DataBase - admin verification - display prodacts)
       });
     } catch (error) {
       print(error);
       // TODO: Show error message to user
     }
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> daee684 (Add product to DataBase - admin verification - display prodacts)
 }
