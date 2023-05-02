@@ -44,6 +44,7 @@ dependencies:
   firebase_auth: ^4.2.5
   firebase_core: ^2.5.4
   cloud_firestore: ^4.4.0
+  google_sign_in: ^6.1.0
   carousel_pro: ^1.0.0
   fl_chart: ^0.55.2
   http: ^0.13.0

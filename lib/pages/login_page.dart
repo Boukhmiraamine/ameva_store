@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
+import '../services/auth_service.dart';
+import '../square_tile_Google.dart';
 import 'Forgot_pw_page.dart';
 
 
@@ -16,32 +18,47 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 //for hide password
-bool _obscureText=true;
+  bool _obscureText=true;
 
-final _formkey = GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
 // text controllers
-final _emailController = TextEditingController();
-final _passwordController = TextEditingController();
-bool _isAdmin = false;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isAdmin = false;
 
 
-Future signIn() async{
-
-  if(_formkey.currentState!.validate()){
-
-  await FirebaseAuth.instance.signInWithEmailAndPassword
-    (
-
-      email:_emailController.text.trim(),
-      password:_passwordController.text.trim(),
-    );
+  Future signIn() async{
+    if (_formkey.currentState!.validate()) {
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+      } catch (e) {
+        // Afficher un message d'erreur stylé
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Erreur d'authentification"),
+              content: Text("L'email ou le mot de passe est incorrect. Veuillez réessayer."),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
   }
-}
   @override
   void dispose(){
-   _emailController.dispose();
-   _passwordController.dispose();
-   super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -54,8 +71,8 @@ Future signIn() async{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-             // Icon(Icons.android,size: 100,),
-              SizedBox(height: 90,),
+              // Icon(Icons.android,size: 100,),
+              SizedBox(height: 20),
               //Hello
               SizedBox(
                 height: 190,
@@ -70,9 +87,9 @@ Future signIn() async{
                 style: TextStyle( fontSize: 18,),
               ),
 
-              SizedBox(height: 30,),
+              SizedBox(height: 20,),
               //email textfield
-               Padding(
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal:25.0),
                 child: Container(
                   decoration: BoxDecoration(
@@ -113,14 +130,14 @@ Future signIn() async{
                       if(value!.isEmpty){
                         return "Entrer Email";
                       }
-                   else if(!emailValid){
-                      return "Entrer un Email valide ";
-                    }
-                },
+                      else if(!emailValid){
+                        return "Entrer un Email valide ";
+                      }
+                    },
                   ),
                 ),
               ),
-                SizedBox(height: 20,),
+              SizedBox(height: 20,),
               //password textField
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal:25.0),
@@ -182,15 +199,15 @@ Future signIn() async{
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                   
+
                     GestureDetector(
                       onTap:(){
-                          Navigator.push(context,MaterialPageRoute(builder: (context){
-                            return ForgotPasswordPage();
-                          }
-                          ),
-                          );
-                       },
+                        Navigator.push(context,MaterialPageRoute(builder: (context){
+                          return ForgotPasswordPage();
+                        }
+                        ),
+                        );
+                      },
                       child: Text("Mot de passe oublié? ",
                         style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),
                       ),
@@ -205,7 +222,7 @@ Future signIn() async{
                 padding: const EdgeInsets.symmetric(horizontal:25.0),
                 child: GestureDetector(
                   onTap: signIn,
-                      /*(){
+                  /*(){
                     if(_formkey.currentState!.validate()) {
                     print("login");
                     signIn;
@@ -215,26 +232,66 @@ Future signIn() async{
                   child: Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(color: Colors.deepPurple,
-                    borderRadius: BorderRadius.circular(12)),
+                        borderRadius: BorderRadius.circular(12)),
                     child: Center(
                       child: Text('Se connecter',style: TextStyle(
-                          color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,),
                       ),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 25,),
+
+              // continuer avecGOOGLE
+              SizedBox(height: 20,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Row(
+                  children: [
+                    Expanded(child: Divider(
+                      thickness: 0.5,
+                      color: Colors.grey[400],
+                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text("ou continuer avec",style: TextStyle(color:Colors.grey[700]),),
+                    ),
+                    Expanded(child: Divider(
+                      thickness: 0.5,
+                      color: Colors.grey[700],
+                    )
+                    ),
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 15,),
+              //google sign in button
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SquareTile(
+                    onTap: ()=> AuthService().signInWithGoogle(),
+                    imagePath: "assets/images/google.png",),
+                ],
+              ),
+
+              //google button
+              SizedBox(height: 35,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+
+                children: [
+
                   Text("Vous n'avez pas de compte ? ",style: TextStyle(fontWeight: FontWeight.bold),),
                   GestureDetector(onTap: widget.showRegisterPage,
-                  child: Text("S'inscrire ",
-                    style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),
-                  )),
+                      child: Text("S'inscrire ",
+                        style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),
+                      )
+                  ),
 
                 ],
               )
