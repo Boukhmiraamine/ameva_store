@@ -25,7 +25,7 @@ class SquareTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           color: Colors.grey[200],
         ),
-        padding: const EdgeInsets.symmetric(horizontal:103.0 ,vertical: 9.0),// Ajuster le padding ici
+        padding: const EdgeInsets.symmetric(horizontal:50.0 ,vertical: 9.0),// Ajuster le padding ici
         child: Row(
 
           children: [
