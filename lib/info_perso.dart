@@ -26,7 +26,6 @@ class InfoPersoState extends State<InfoPerso> {
         title: Text("Informations Personelles"),
         backgroundColor: Colors.deepPurple,
       ),
-      drawer: Mydrawer() ,
       body: Column(
           children: <Widget>[
             //profileimage(),

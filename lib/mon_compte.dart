@@ -1,6 +1,8 @@
 
 
+import 'package:app11/Interfaces/Profile.dart';
 import 'package:app11/info_perso.dart';
+import 'package:app11/profile.dart';
 import 'package:flutter/material.dart';
 //import 'package:image_picker/image_picker.dart';
 import 'package:app11/aide.dart';
@@ -31,7 +33,7 @@ class MonCompteState extends State<MonCompte> {
         '4' : (context) => Aide(),
       },
       home: Scaffold(
-        body: InfoPerso() ,
+        body: ProfileScreen() ,
         drawer: Mydrawer() ,
       ),
     );
