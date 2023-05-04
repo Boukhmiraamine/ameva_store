@@ -38,7 +38,7 @@ class UserScreenState extends State<UserScreen> {
   }
 
   void _showEditUserScreen(User user) async {
-    String ID=user.uid;
+    String? ID=user.uid;
     final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => EditUserScreen(user: user),
@@ -70,8 +70,8 @@ class UserScreenState extends State<UserScreen> {
       setState(() {
         searchTerm=value;
         _filteredUsers = _users.where((user) =>
-        user.fname.toLowerCase().contains(searchTerm.toLowerCase()) ||
-            user.lname.toLowerCase().contains(searchTerm.toLowerCase()))
+        user.fname!.toLowerCase().contains(searchTerm.toLowerCase()) ||
+            user.lname!.toLowerCase().contains(searchTerm.toLowerCase()))
             .toList();
       });
 

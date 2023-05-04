@@ -1,24 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
-  final String uid;
-  late final String fname;
-  late final String lname;
-  late final String email;
-  late final String phone;
-  late final String pw;
-  late final String address;
-  final String profileImageUrl;
+  final String? uid;
+  late final String? fname;
+  late final String? lname;
+  late final String? email;
+  late final String? phone;
+  late final String? pw;
+  late final String? adresse;
+  final String? profileImageUrl;
 
   User({
-    required this.uid,
-    required this.fname,
-    required this.lname,
-    required this.email,
-    required this.phone,
-    required this.pw,
-    required this.address,
-    required this.profileImageUrl,
+     this.uid,
+     this.fname,
+     this.lname,
+     this.email,
+     this.phone,
+     this.pw,
+     this.adresse,
+     this.profileImageUrl,
   });
 
   factory User.fromSnapshot(DocumentSnapshot doc) {
@@ -30,7 +30,7 @@ class User {
       email: data['email'],
       phone: data['phone'],
       pw: data['pw'],
-      address: data['address'],
+      adresse: data['address'],
       profileImageUrl: data['profileImageUrl'],
     );
   }
@@ -42,7 +42,7 @@ class User {
       'email': email,
       'phone':phone,
       'pw': pw,
-      'address': address,
+      'adresse': adresse,
       'profileImageUrl': profileImageUrl,
     };
   }
@@ -53,7 +53,7 @@ class User {
     String? email,
     String? phone,
     String? pw,
-    String? address,
+    String? adresse,
     String? profileImageUrl,
   }) {
     return User(
@@ -63,7 +63,7 @@ class User {
       email: email ?? this.email,
       phone: phone ?? this.phone,
       pw: pw ?? this.pw,
-      address: address ?? this.address,
+      adresse: adresse ?? this.adresse,
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
     );
   }
