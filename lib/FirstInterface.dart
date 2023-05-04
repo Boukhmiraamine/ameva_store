@@ -1,4 +1,4 @@
-import 'package:app11/interfaces/Admin/Admin_Screen.dart';
+// import 'package:app11/interfaces/Admin/Admin_Screen.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import '../Interfaces/About.dart';
 import '../Interfaces/Profile.dart';
 import '../Interfaces/Home.dart';
 import '../Interfaces/Category.dart';
-import 'interfaces/Admin/waiting_products.dart';
+// import 'interfaces/Admin/waiting_products.dart';
 
 class FirstInterface extends StatefulWidget {
   const FirstInterface({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class FirstInterface extends StatefulWidget {
   State<FirstInterface> createState() => _FirstInterfaceState();
 }
 
-var _interfaces = [Home(), Profile(), Category(), About(), waiting_products()];
+var _interfaces = [Home(), Profile(), Category(), About(), /*waiting_products()* */];
 int _currentIndex = 0;
 
 

@@ -17,8 +17,6 @@ class InfoPerso extends StatefulWidget {
 }
 
 class InfoPersoState extends State<InfoPerso> {
-  // File? imageFile ;
-  // final ImagePicker _picker = ImagePicker() ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,94 +32,9 @@ class InfoPersoState extends State<InfoPerso> {
             listeofpersonalinfo(),
           ],
         ),
+      // drawer: Mydrawer(),
     );
   }
-  // Widget profileimage() {
-  //   return Padding(
-  //     padding: const EdgeInsets.all(30.0),
-  //     child: Center(
-  //       child: Stack(
-  //         children: [
-  //           CircleAvatar(
-  //             radius: 70.0,
-  //             backgroundImage:
-  //             imageFile == null
-  //                 ?AssetImage("images/avatar.png") as ImageProvider
-  //                 :FileImage(File(imageFile!.path)),
-  //           ),
-  //           Positioned(
-  //             right: 2.0,
-  //             bottom: -5.0,
-  //             child: Container(
-  //               padding: EdgeInsets.all(5.0),
-  //               margin: EdgeInsets.symmetric(horizontal: 0.0,vertical: 5.0),
-  //               decoration: BoxDecoration(
-  //                 borderRadius: BorderRadius.circular(20),
-  //                 color: Colors.cyanAccent,
-  //               ),
-  //               child: InkWell(
-  //                 onTap: (){
-  //                   showModalBottomSheet(
-  //                     context: context,
-  //                     builder: ((builder) => bottomsheet()),
-  //                   );
-  //                 },
-  //                 child: Icon(
-  //                   Icons.camera_alt,
-  //                   color: Colors.lightBlue,
-  //                   size: 20,
-  //                 ),
-  //               ),
-  //             ),
-  //           )
-  //         ],
-  //       ),
-  //     ),
-  //   ) ;
-  // }
-  // Widget bottomsheet(){
-  //   return Container(
-  //     height: 100.0,
-  //     width: MediaQuery.of(context).size.width,
-  //     margin: EdgeInsets.symmetric(horizontal: 20.0,vertical: 20.0),
-  //     child: Column(
-  //       children: [
-  //         Text(
-  //           "Choisis une photo de profile",
-  //           style: TextStyle(fontSize: 20.0),
-  //         ),
-  //         SizedBox(height: 20.0,),
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: <Widget>[
-  //             TextButton(
-  //               onPressed: (){
-  //                 takePhoto(ImageSource.camera);
-  //               },
-  //               child: Column(
-  //                 children: [
-  //                   Icon(Icons.camera),
-  //                   Text("Camera")
-  //                 ],
-  //               )
-  //             ),
-  //             TextButton(
-  //                 onPressed: (){
-  //                   takePhoto(ImageSource.gallery);
-  //                 },
-  //                 child: Column(
-  //                   children: [
-  //                     Icon(Icons.photo),
-  //                     Text("Gallery")
-  //                   ],
-  //                 )
-  //             ),
-  //           ],
-  //         )
-  //       ],
-  //     ),
-  //   ) ;
-  // }
   Widget listeofpersonalinfo(){
     return Expanded(
       child: ListView(

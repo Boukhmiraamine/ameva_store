@@ -25,17 +25,14 @@ class MonCompteState extends State<MonCompte> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //initialRoute: '1',
+      // initialRoute: '0',
       routes: {
         '1' : (context) =>  InfoPerso(),
         '2' : (context) => InfoBank(),
         '3' : (context) => Commandes(),
         '4' : (context) => Aide(),
       },
-      home: Scaffold(
-        body: ProfileScreen() ,
-        drawer: Mydrawer() ,
-      ),
+      home: ProfileScreen(),
     );
   }
 

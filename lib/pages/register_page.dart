@@ -1,4 +1,4 @@
-import 'package:app11/interfaces/Admin/models/usermodel.dart';
+// import 'package:app11/interfaces/Admin/models/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Icon(Icons.android,size: 100,),
-              SizedBox(height: 30,),
+              SizedBox(height: 65,),
 
               /*SizedBox(
                 height: 160,
