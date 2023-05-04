@@ -1,6 +1,11 @@
 
 
+import 'package:app11/Interfaces/Profile.dart';
+import 'package:app11/email&password.dart';
 import 'package:app11/info_perso.dart';
+import 'package:app11/nom.dart';
+import 'package:app11/profile.dart';
+import 'package:app11/telephone.dart';
 import 'package:flutter/material.dart';
 //import 'package:image_picker/image_picker.dart';
 import 'package:app11/aide.dart';
@@ -23,17 +28,14 @@ class MonCompteState extends State<MonCompte> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //initialRoute: '1',
-      routes: {
-        '1' : (context) =>  InfoPerso(),
-        '2' : (context) => InfoBank(),
-        '3' : (context) => Commandes(),
-        '4' : (context) => Aide(),
-      },
-      home: Scaffold(
-        body: InfoPerso() ,
-        drawer: Mydrawer() ,
-      ),
+      // // initialRoute: '0',
+      // routes: {
+      //   '1' : (context) =>  Nom(),
+      //   '2' : (context) => Phone(),
+      //   '3' : (context) => EmailEtPassword(),
+      //   // '4' : (context) => Aide(),
+      // },
+      home: ProfileScreen(),
     );
   }
 

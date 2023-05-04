@@ -270,7 +270,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 15,),
               //google sign in button
-              Row(
+                 Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SquareTile(
