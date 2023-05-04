@@ -15,7 +15,7 @@ class FirstInterface extends StatefulWidget {
   State<FirstInterface> createState() => _FirstInterfaceState();
 }
 
-var _interfaces = [Home(), Profile(), Category(), About(), waiting_products()];
+var _interfaces = [Home(), Profile(), Category(), About(), AdminScreen()];
 int _currentIndex = 0;
 
 
