@@ -53,6 +53,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Center(
             child: const Text('Profile'),
           ),
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(
+                  Icons.settings,
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          ),
         ),
         drawer: Mydrawer(),
         body: ListView(

@@ -15,11 +15,11 @@ class FirstInterface extends StatefulWidget {
   State<FirstInterface> createState() => _FirstInterfaceState();
 }
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 var _interfaces = [Home(), Profile(), Category(), About(), /*waiting_products()* */];
-=======
-var _interfaces = [Home(), Profile(), Category(), About(), AdminScreen()];
->>>>>>> a4e7e3a7d86e65fb7690f950c7ef7bc2f2a68c2d
+// =======
+// var _interfaces = [Home(), Profile(), Category(), About(), /*AdminScreen()*/];
+// >>>>>>> a4e7e3a7d86e65fb7690f950c7ef7bc2f2a68c2d
 int _currentIndex = 0;
 
 
