@@ -148,7 +148,11 @@ class _AddProductPageState extends State<AddProductPage> {
         // L'utilisateur n'est pas connecté, traiter le cas d'erreur
         return;
       }
-
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Your product is in the wait list products'),
+          ),
+      );
       final ref = FirebaseStorage.instance
           .ref()
           .child('products')
@@ -159,7 +163,7 @@ class _AddProductPageState extends State<AddProductPage> {
       final url = await ref.getDownloadURL();
       print("----------------*****************************************************");
       print("----------------"+ url);
-      FirebaseFirestore.instance.collection('products').doc().set({
+      FirebaseFirestore.instance.collection('waiting_products').doc().set({
         'name': _productName,
         'description': _productDescription,
         'image': url,
@@ -167,7 +171,9 @@ class _AddProductPageState extends State<AddProductPage> {
         'category': _productCategory,
         'publication_date': FieldValue.serverTimestamp(),
         'user_id': user.uid, // Ajouter l'ID de l'utilisateur ici
-      });
+      }
+
+      );
     } catch (error) {
       print(error);
       // TODO: Show error message to user

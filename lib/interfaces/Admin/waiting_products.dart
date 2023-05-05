@@ -9,6 +9,7 @@ import '../../filtering.dart';
 import 'package:badges/src/badge.dart' as badge;
 
 import 'item_waiting_products.dart';
+import 'models/usermodel.dart';
 
 class waiting_products extends StatefulWidget {
   const waiting_products({Key? key}) : super(key: key);
@@ -182,10 +183,12 @@ class _waiting_productsState extends State<waiting_products> {
                       .map((doc) => Product.fromSnapshot(doc))
                       .toList();
 
+
                   return GridView.builder(
                       itemCount: products.length,
                       itemBuilder: (BuildContext context, int index) {
                         final product = products[index];
+
                         return GestureDetector(
                           child: item_waiting_products(product),
                           onTap: () {

@@ -1,7 +1,8 @@
 import 'package:app11/Modules/Product.dart';
+import 'package:app11/MyProductsOnly.dart';
 import 'package:flutter/material.dart';
 
-Widget ProductItem(Product Product) {
+Widget ProductItem(BuildContext context,Product Product,) {
   return Card(
     color: Colors.grey[300],
     shape: RoundedRectangleBorder(
@@ -105,11 +106,17 @@ Widget ProductItem(Product Product) {
 
                           print("****************************************");
 
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyProductsOnly()),
+                          );
+
                         },
                         child: Row(
                           children: [
                             Icon(Icons.send),
-                            Text(" Interested" ,style: TextStyle(fontSize: 17))
+                            Text("  Rechage" ,style: TextStyle(fontSize: 20))
                           ],
                         )),
                   ),

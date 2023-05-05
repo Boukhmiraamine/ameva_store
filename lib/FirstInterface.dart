@@ -1,4 +1,5 @@
 // import 'package:app11/interfaces/Admin/Admin_Screen.dart';
+import 'package:app11/interfaces/Admin/Admin_Screen.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,9 @@ class FirstInterface extends StatefulWidget {
 }
 
 // <<<<<<< HEAD
-var _interfaces = [Home(), Profile(), Category(), About(), /*waiting_products()* */];
+//var _interfaces = [Home(), Profile(), Category(), About(), AdminScreen()];
 // =======
-// var _interfaces = [Home(), Profile(), Category(), About(), /*AdminScreen()*/];
+ var _interfaces = [Home(), Profile(), Category(), About(), AdminScreen()];
 // >>>>>>> a4e7e3a7d86e65fb7690f950c7ef7bc2f2a68c2d
 int _currentIndex = 0;
 

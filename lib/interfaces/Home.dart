@@ -1,3 +1,4 @@
+import 'package:app11/interfaces/Admin/models/usermodel.dart';
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import '../ProductDetail.dart';
 import '../filtering.dart';
 import '../item.dart';
 import 'package:badges/src/badge.dart' as badge;
+
+
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -189,12 +192,14 @@ class _HomeState extends State<Home> {
                       .map((doc) => Product.fromSnapshot(doc))
                       .toList();
 
+
                   return GridView.builder(
                       itemCount: products.length,
                       itemBuilder: (BuildContext context, int index) {
                         final product = products[index];
+
                         return GestureDetector(
-                          child: ProductItem(product),
+                          child: ProductItem(context,product),
                           onTap: () {
                             setState(() {
                               Navigator.push(
