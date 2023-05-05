@@ -1,270 +1,3 @@
-//import 'package:flutter/material.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:fl_chart/fl_chart.dart';
-//import '../responsive.dart';
-
-/*class DashboardScreen extends StatelessWidget {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  Widget bottomTitlesWidgets(double value, TitleMeta meta){
-  const style= TextStyle(
-      color: Color(0xff7589a2),
-      fontWeight: FontWeight.bold,
-      fontSize: 14);
-  String text=value.toInt() as String;
-  text=text + 'month';
-  return FittedBox(child: Text(text, style: style, textAlign: TextAlign.center,),);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Responsive(
-        mobile: _buildMobileLayout(),
-        desktop: _buildDesktopLayout(),
-      ),
-    );
-  }
-
-  Widget _buildMobileLayout() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildUserCountCard(),
-          _buildProductCountCard(),
-          _buildWaitingProductCountCard(),
-          _buildProductAddedChart(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDesktopLayout() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 2,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _buildUserCountCard(),
-                _buildProductCountCard(),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _buildWaitingProductCountCard(),
-                _buildProductAddedChart(),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildUserCountCard() {
-    return Card(
-      margin: EdgeInsets.all(16.0),
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: firestore.collection('users').snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return CircularProgressIndicator();
-            }
-            int userCount = snapshot.data!.size;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Nombre d\'utilisateurs : $userCount',
-                  style: TextStyle(fontSize: 20.0),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProductCountCard() {
-    return Card(
-      margin: EdgeInsets.all(16.0),
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: firestore.collection('products').snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return CircularProgressIndicator();
-            }
-            int productCount = snapshot.data!.size;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Nombre de produits : $productCount',
-                  style: TextStyle(fontSize: 20.0),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildWaitingProductCountCard() {
-    return Card(
-      margin: EdgeInsets.all(16.0),
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: firestore.collection('waiting_product').snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return CircularProgressIndicator();
-            }
-            int waitingProductCount = snapshot.data!.size;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Nombre de produits en attente : $waitingProductCount',
-                  style: TextStyle(fontSize: 20.0),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProductAddedChart() {
-    return Card(
-      margin: EdgeInsets.all(16.0),
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: firestore.collection('products').snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return CircularProgressIndicator();
-            }
-            List<Map<String, dynamic>> data = [];
-
-            /*for (var doc in snapshot.data!.docs) {
-              //Timestamp timestamp = doc['publication_date'];
-              /*DateTime date =
-              DateTime.fromMillisecondsSinceEpoch(timestamp.seconds * 1000);*/
-              Timestamp timestamp = Timestamp.fromDate(DateTime.parse(doc['publication_date']));
-              DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp.seconds * 1000);
-              String month = '${date.year.toString()}-${date.month.toString()}';
-              int index = data.indexWhere((item) => item['month'] == month);
-
-              if (index >= 0) {
-                data[index]['count']++;
-              } else {
-                data.add({'month': month, 'count': 1});
-              }
-            }*/
-            for (var doc in snapshot.data!.docs) {
-              //Timestamp timestamp = Timestamp.fromDate(DateTime.parse(doc['publication_date']));
-              Timestamp timestamp = doc['publication_date'];
-              //DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp.seconds * 1000);
-              DateTime date = timestamp.toDate();
-              String month = '${date.year.toString()}-${date.month.toString()}';
-              int index = data.indexWhere((item) => item['month'] == month);
-
-              if (index >= 0) {
-                data[index]['count']++;
-              } else {
-                data.add({'month': month, 'count': 1});
-              }
-            }
-
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Nombre de produits ajoutés par mois',
-                  style: TextStyle(fontSize: 20.0),
-                ),
-                SizedBox(height: 16.0),
-                AspectRatio(
-                  aspectRatio: 1.7,
-                  child: BarChart(
-                    BarChartData(
-                      alignment: BarChartAlignment.spaceAround,
-                      maxY: 6,
-                      barTouchData: BarTouchData(enabled: false),
-                      titlesData: FlTitlesData(
-                        show: true,
-                        bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                         /* margin: 20,
-                          rotateAngle: 45,*/
-                         /* getTextStyles: (BuildContext context, double v) {
-                        return  const TextStyle(
-                              color: Color(0xff7589a2),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14);
-          },
-                          getTitles: (double value) {
-                            return data[value.toInt()]['month'];
-                          },*/
-                          getTitlesWidget: bottomTitlesWidgets,
-                        ),
-                        ),
-                        leftTitles: AxisTitles (
-                            sideTitles: SideTitles(showTitles: false),
-            )
-                      ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      barGroups: data
-                          .asMap()
-                          .map((key, value) =>
-                          MapEntry(
-                              key,
-                              BarChartGroupData(
-                                x: key,
-                                barRods: [
-                                  BarChartRodData(
-                                    toY: value['count'].toDouble(),
-                                    //colors: [Colors.blueAccent],
-                                    color: Colors.blueAccent,
-                                  )
-                                ],
-                                showingTooltipIndicators: [0],
-                              )))
-                          .values
-                          .toList(),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-}*/
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -292,76 +25,33 @@ class DashboardScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildUserCountCard(),
-          _buildProductCountCard(),
-          _buildWaitingProductCountCard(),
-          _buildExchangeHistoryCard(),
+          _buildGridCards(),
         ],
       ),
     );
   }
 
   Widget _buildDesktopView() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Column(
-            children: [
-              _buildUserCountCard(),
-              _buildProductCountCard(),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Column(
-            children: [
-              _buildWaitingProductCountCard(),
-              _buildExchangeHistoryCountCard(),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-
-
-
-  Widget _buildExchangeHistoryCard() {
-    return Card(
+    return SingleChildScrollView(
       child: Column(
         children: [
-          ListTile(
-            leading: Icon(Icons.history),
-            title: Text('Historique des échanges'),
-          ),
-         /* AspectRatio(
-            aspectRatio: 2,
-            child: LineChart(
-              LineChartData(
-                lineTouchData: LineTouchData(enabled: false),
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: exchangeHistory
-                        .asMap()
-                        .entries
-                        .map((entry) {
-                      return FlSpot(entry.key.toDouble(), entry.value.toDouble());
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
-          ),*/
+          _buildGridCards(),
         ],
       ),
     );
   }
+
+
+
+
+
   Widget _buildUserCountCard() {
     return Card(
+      color: Colors.cyan,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        side: BorderSide(color: Colors.white),),
+      elevation: 10,
       margin: EdgeInsets.all(16.0),
       child: Padding(
         padding: EdgeInsets.all(16.0),
@@ -375,10 +65,21 @@ class DashboardScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.person),
-                Text(
-                  'Nombre d\'utilisateurs : $userCount',
-                  style: TextStyle(fontSize: 20.0),
+
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.person),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Number of Users : $userCount',
+                          style: TextStyle(fontSize: 20.0, ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             );
@@ -390,6 +91,11 @@ class DashboardScreen extends StatelessWidget {
 
   Widget _buildProductCountCard() {
     return Card(
+      color: Colors.deepPurpleAccent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        side: BorderSide(color: Colors.white),),
+      elevation: 10,
       margin: EdgeInsets.all(16.0),
       child: Padding(
         padding: EdgeInsets.all(16.0),
@@ -403,11 +109,22 @@ class DashboardScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.shop),
-                Text(
-                  'Nombre de produits : $productCount',
-                  style: TextStyle(fontSize: 20.0),
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.shop),
+                      Padding(padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Number of Products : $productCount',
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
+
+
               ],
             );
           },
@@ -417,11 +134,16 @@ class DashboardScreen extends StatelessWidget {
   }
   Widget _buildWaitingProductCountCard() {
     return Card(
+      color: Colors.orangeAccent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        side: BorderSide(color: Colors.white),),
+      elevation: 10,
       margin: EdgeInsets.all(16.0),
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: StreamBuilder<QuerySnapshot>(
-          stream: firestore.collection('waiting_product').snapshots(),
+          stream: firestore.collection('waiting_products').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return CircularProgressIndicator();
@@ -430,11 +152,22 @@ class DashboardScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.watch_later),
-                Text(
-                  'Nombre de produits en attente : $waitingProductCount',
-                  style: TextStyle(fontSize: 20.0),
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.watch_later),
+                      Padding(padding: const EdgeInsets.all(8.0),
+                        child:  Text(
+                          'Number of Waiting Products : $waitingProductCount',
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
+
+
               ],
             );
           },
@@ -445,11 +178,16 @@ class DashboardScreen extends StatelessWidget {
 
   Widget _buildExchangeHistoryCountCard() {
     return Card(
+      color: Colors.pinkAccent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        side: BorderSide(color: Colors.white),),
+      elevation: 10,
       margin: EdgeInsets.all(16.0),
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: StreamBuilder<QuerySnapshot>(
-          stream: firestore.collection('exchange').snapshots(),
+          stream: firestore.collection('exchanges').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return CircularProgressIndicator();
@@ -458,10 +196,56 @@ class DashboardScreen extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Nombre de produits échangé : $ExchangeHistoryCount',
-                  style: TextStyle(fontSize: 20.0),
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.currency_exchange_outlined),
+                      Padding(padding: const EdgeInsets.all(8.0),
+                        child:  Text(
+                          'Number of Exchange Produts : $ExchangeHistoryCount',
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
+
+
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGridCards() {
+    return Container(
+      margin: EdgeInsets.only(top: 40),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        // padding: const EdgeInsets.all(8.0),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: firestore.collection('users').snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            int userCount = snapshot.data!.size;
+            return GridView.count(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              childAspectRatio: 1.0,
+              mainAxisSpacing: 8.0,
+              crossAxisSpacing: 8.0,
+              padding: EdgeInsets.all(16.0),
+              children: [
+                _buildUserCountCard() ,
+                _buildProductCountCard(),
+                _buildWaitingProductCountCard(),
+                _buildExchangeHistoryCountCard(),
               ],
             );
           },

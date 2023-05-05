@@ -23,7 +23,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ajouter Utilisateur'),
+        title: Text('Add User'),
         backgroundColor: Colors.deepPurple,
       ),
       body: SingleChildScrollView(
@@ -36,11 +36,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Prénom',
+                    labelText: 'First Name',
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez enter votre prénom ';
+                      return 'Please enter Your First Name ';
                     }
                     return null;
                   },
@@ -50,11 +50,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Nom de famille',
+                    labelText: 'Last Name',
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez enter votre nom';
+                      return 'Please enter Your Last Name';
                     }
                     return null;
                   },
@@ -68,7 +68,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez enter Votre Email';
+                      return 'Please enter Your Email';
                     }
                     return null;
                   },
@@ -78,11 +78,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Téléphone',
+                    labelText: 'Phone',
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez enter Votre Téléphone';
+                      return 'Please enter Your Phone';
                     }
                     return null;
                   },
@@ -92,11 +92,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Adresse',
+                    labelText: 'Address',
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez enter Votre Adresse';
+                      return 'Please enter Your Address';
                     }
                     return null;
                   },
@@ -107,7 +107,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 TextFormField(
                   obscureText: _obscureText,
                   decoration: InputDecoration(
-                    labelText: 'Mot de passe',
+                    labelText: 'PassWord',
                     prefixIcon: Padding(
                       padding: const EdgeInsets.only(left: 30.0,right: 10.0),
                       child: Icon(
@@ -127,7 +127,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
 
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez enter Votre Mot de passe';
+                      return 'Please enter Your PassWord';
                     }
                     return null;
                   },
@@ -148,7 +148,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                           email: _email,
                           phone: _phone,
                           pw: _pw,
-                          address: _address,
+                          adresse: _address,
                           profileImageUrl: '',
                         );
                         Firebase.addUser(newUser).then((value) {

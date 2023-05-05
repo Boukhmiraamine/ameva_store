@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../AddProduct.dart';
 import '../Modules/Product.dart';
 import '../ProductDetail.dart';
-import '../filtering.dart';
+//import '../filtering.dart';
 import '../item.dart';
 import 'package:badges/src/badge.dart' as badge;
 
@@ -158,10 +158,10 @@ class _HomeState extends State<Home> {
                   child: IconButton(
                       onPressed: () {
                         setState(() {
-                          Navigator.push(context,
+                         /* Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return FiltringProduct(product: listProduct);
-                          }));
+                          }));*/
                         });
                       },
                       icon: Icon(

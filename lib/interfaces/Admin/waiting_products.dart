@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../Modules/Product.dart';
 import '../../ProductDetail.dart';
-import '../../filtering.dart';
+//import '../../filtering.dart';
 
 import 'package:badges/src/badge.dart' as badge;
 
@@ -149,10 +149,10 @@ class _waiting_productsState extends State<waiting_products> {
                   child: IconButton(
                       onPressed: () {
                         setState(() {
-                          Navigator.push(context,
+                         /* Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                                 return FiltringProduct(product: listProduct);
-                              }));
+                              }));*/
                         });
                       },
                       icon: Icon(

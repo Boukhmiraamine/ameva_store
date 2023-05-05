@@ -8,6 +8,7 @@ import '../Interfaces/About.dart';
 import '../Interfaces/Profile.dart';
 import '../Interfaces/Home.dart';
 import '../Interfaces/Category.dart';
+import 'interfaces/Admin/Admin_Screen.dart';
 // import 'interfaces/Admin/waiting_products.dart';
 
 class FirstInterface extends StatefulWidget {
@@ -16,11 +17,9 @@ class FirstInterface extends StatefulWidget {
   State<FirstInterface> createState() => _FirstInterfaceState();
 }
 
-// <<<<<<< HEAD
-//var _interfaces = [Home(), Profile(), Category(), About(), AdminScreen()];
-// =======
- var _interfaces = [Home(), Profile(), Category(), About(), AdminScreen()];
-// >>>>>>> a4e7e3a7d86e65fb7690f950c7ef7bc2f2a68c2d
+
+var _interfaces = [Home(), Profile(), Category(), About(), AdminScreen()];
+
 int _currentIndex = 0;
 
 

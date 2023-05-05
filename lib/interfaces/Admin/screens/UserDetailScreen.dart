@@ -19,7 +19,7 @@ class UserDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Détails de l\'utilisateur',
+          'User Details',
           style: TextStyle(color: Colors.white),
         ),
         iconTheme: IconThemeData(color: mainColor),
@@ -45,7 +45,7 @@ class UserDetailScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.0),
-              Text("Nom", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              Text("First Name", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
                 '${user.fname!} ',
@@ -56,7 +56,7 @@ class UserDetailScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.0),
-              Text("Prenom", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              Text("Last Name", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
                 ' ${user.lname!}',
@@ -78,7 +78,7 @@ class UserDetailScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.0),
-              Text("Téléphone", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              Text("Phone", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
                 user.phone!,
@@ -91,7 +91,7 @@ class UserDetailScreen extends StatelessWidget {
 
               ),
               SizedBox(height: 20.0),
-              Text("Mote de passe", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              Text("PassWord", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
                 user.pw!,
@@ -102,10 +102,10 @@ class UserDetailScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.0),
-              Text("Adresse", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              Text("Address", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
-                user.address!,
+                user.adresse!,
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.bold,

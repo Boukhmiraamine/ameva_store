@@ -31,7 +31,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     _lnameController = TextEditingController(text: widget.user.lname);
     _emailController = TextEditingController(text: widget.user.email);
     _phoneController = TextEditingController(text: widget.user.phone);
-    _addressController = TextEditingController(text: widget.user.address);
+    _addressController = TextEditingController(text: widget.user.adresse);
     _passwordController = TextEditingController(text: widget.user.pw);
   }
 
@@ -54,7 +54,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Modifier utilisateur',
+            'Edit User',
             style: TextStyle(color: Colors.white),
           ),
           iconTheme: IconThemeData(color: mainColor),
@@ -69,12 +69,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
     TextFormField(
     controller: _fnameController,
     decoration: InputDecoration(
-    labelText: 'Prénom',
+    labelText: 'First Name',
     border: OutlineInputBorder(),
     ),
     validator: (value) {
     if (value == null || value.isEmpty) {
-    return 'Veuillez entrer le prénom';
+    return 'Please entrer your First Name';
     }
     return null;
     },
@@ -83,12 +83,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
     TextFormField(
     controller: _lnameController,
     decoration: InputDecoration(
-    labelText: 'Nom de famille',
+    labelText: 'Last Name',
     border: OutlineInputBorder(),
     ),
     validator: (value) {
     if (value == null || value.isEmpty) {
-    return 'Veuillez entrer le nom de famille';
+    return 'Please entrer your Last Name';
     }
     return null;
     },
@@ -102,7 +102,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     ),
     validator: (value) {
     if (value == null || value.isEmpty) {
-    return 'Veuillez entrer adresse email';
+    return 'Please entrer your email';
     }
     return null;
     },
@@ -111,12 +111,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
     TextFormField(
     controller: _phoneController,
     decoration: InputDecoration(
-    labelText: 'Téléphone',
+    labelText: 'Phone',
     border: OutlineInputBorder(),
     ),
     validator: (value) {
     if (value == null || value.isEmpty) {
-    return 'Veuillez entrer le numéro de téléphone';
+    return 'Please entrer your Phone';
     }
     return null;
     },
@@ -125,12 +125,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
       TextFormField(
         controller: _addressController,
         decoration: InputDecoration(
-          labelText: 'Adresse',
+          labelText: 'Address',
           border: OutlineInputBorder(),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Veuillez entrer adresse email';
+            return 'Please entrer your Address';
           }
           return null;
         },
@@ -140,7 +140,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     controller: _passwordController,
       obscureText: _obscureText,
     decoration: InputDecoration(
-    labelText: 'Nouveau mot de passe',
+    labelText: 'PassWord',
     border: OutlineInputBorder(),
       prefixIcon: Padding(
         padding: const EdgeInsets.only(left: 30.0,right: 10.0),
@@ -178,7 +178,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
               email: _emailController.text,
               phone: _phoneController.text,
               pw: _passwordController.text,
-              address: _addressController.text,
+              adresse: _addressController.text,
               profileImageUrl: '',
             );
             await Firebase.editUser(updatedUser);
@@ -192,7 +192,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
             Navigator.popAndPushNamed(context, '/users');
           }
         },
-        child: Text('Enregistrer'),
+        child: Text('Save'),
         style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.deepPurple)),
       ),
     ],
