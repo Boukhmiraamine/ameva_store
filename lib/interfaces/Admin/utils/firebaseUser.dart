@@ -66,16 +66,16 @@ class Firebase {
     }
   }
 
-  static Future<void> editUser(User user) async {
+  static Future<void> editUser(User user, {File? profileImage}) async {
     final userRef = _firestore.collection('users').doc(user.uid);
-    if (user.profileImageUrl != null) {
+    if (profileImage != null) {
       final ref = _storage.ref().child('users/${user.uid}.jpg');
-      await ref.putFile(user.profileImageUrl as File);
+      await ref.putFile(profileImage);
       final url = await ref.getDownloadURL();
       user = user.copyWith(profileImageUrl: url);
     }
     try{
-    await _firestore.collection('users').doc(user.uid).update(user.toMap());}
+      await _firestore.collection('users').doc(user.uid).update(user.toMap());}
     catch (e) {
       print(e);
     }

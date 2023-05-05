@@ -143,7 +143,7 @@ class DashboardScreen extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: StreamBuilder<QuerySnapshot>(
-          stream: firestore.collection('waiting_product').snapshots(),
+          stream: firestore.collection('waiting_products').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return CircularProgressIndicator();
