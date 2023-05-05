@@ -9,46 +9,10 @@ import 'package:crypto/crypto.dart';
 class Firebase {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static final FirebaseStorage _storage = FirebaseStorage.instance;
-  final fbUser.FirebaseAuth _firebaseAuth = fbUser.FirebaseAuth.instance;
-  final CollectionReference _userCollection =
-  FirebaseFirestore.instance.collection('users');
-
-  /*Future<List<User>> getUsers() async {
-    List<User> users = [];
-
-    try {
-      // Récupération des utilisateurs Firebase Auth
-      List<UserRecord> userRecords = await _firebaseAuth.userManager.users();
-      for (UserRecord userRecord in userRecords) {
-        User user = User(
-          uid: userRecord.uid,
-          email: userRecord.email,
-          fname: userRecord.displayName?.split(" ")[0],
-          lname: userRecord.displayName?.split(" ")[1],
-        );
-        users.add(user);
-      }
-
-      // Récupération des utilisateurs Firestore
-      QuerySnapshot querySnapshot = await _userCollection.get();
-      final snapshot = await _firestore.collection('users').get();
-      final user =
-          snapshot.docs.map((doc) => User.fromSnapshot(doc)).toList();
-      users.add(user as User);
-
-    } catch (e) {
-      print('Error getting all users: $e');
-    }
-
-    return users;
-
-}*/
 
   static Future<List<User>> getUsers() async {
-    List<User> users = [];
-
     final snapshot = await _firestore.collection('users').get();
-     users =
+    final users =
     snapshot.docs.map((doc) => User.fromSnapshot(doc)).toList();
     return users;
   }
@@ -98,9 +62,42 @@ class Firebase {
       final fbUser.User? user = await fbUser.FirebaseAuth.instance.currentUser;
       if (user != null && user.uid == uid) {
         await user.delete();
+
       }
     } catch (e) {
       print(e);
     }
   }
+
+  Future<String> uploadImage(File imageFile, String? uid) async {
+    try {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference reference = FirebaseStorage.instance.ref().child('users/$fileName');
+      UploadTask uploadTask = reference.putFile(imageFile);
+      TaskSnapshot storageTaskSnapshot = await uploadTask;
+      String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+      return downloadUrl;
+    } catch (e) {
+      print(e.toString());
+      return 'An error occurred. Please try again later.';
+    }
+  }
+
+  Future<void> updateUser(User user) async {
+    try {
+      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      await users.doc(user.uid).update({
+        'fname': user.fname,
+        'lname': user.lname,
+        'email': user.email,
+        'phone': user.phone,
+        'adresse': user.adresse,
+        'pw': user.pw,
+        'imageUrl': user.profileImageUrl,
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
 }

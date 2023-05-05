@@ -112,6 +112,7 @@ class DashboardScreen extends StatelessWidget {
                 Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.shop),
                       Padding(padding: const EdgeInsets.all(8.0),
