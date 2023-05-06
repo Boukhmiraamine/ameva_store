@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 
 class User {
   final String? uid;
@@ -11,14 +12,14 @@ class User {
   final String? profileImageUrl;
 
   User({
-     this.uid,
-     this.fname,
-     this.lname,
-     this.email,
-     this.phone,
-     this.pw,
-     this.adresse,
-     this.profileImageUrl,
+    this.uid,
+    this.fname,
+    this.lname,
+    this.email,
+    this.phone,
+    this.pw,
+    this.adresse,
+    this.profileImageUrl,
   });
 
   factory User.fromSnapshot(DocumentSnapshot doc) {
@@ -40,12 +41,26 @@ class User {
       'first name': fname,
       'last name': lname,
       'email': email,
-      'phone':phone,
+      'phone': phone,
       'pw': pw,
       'adresse': adresse,
       'profileImageUrl': profileImageUrl,
     };
   }
+
+  static User fromMap(Map<String, dynamic> map, String documentId) {
+    return User(
+        uid: documentId,
+        fname: map['first name'],
+        lname: map['last name'],
+        email: map['email'],
+        pw: map['pw'],
+        adresse: map['adresse'],
+        phone: map['phone'],
+        profileImageUrl: map['profileImageUrl']
+    );
+  }
+
 
   User copyWith({
     String? fname,
@@ -67,4 +82,5 @@ class User {
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
     );
   }
+
 }
