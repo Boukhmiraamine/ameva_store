@@ -1,6 +1,9 @@
+import 'dart:js';
+
 import 'package:app11/Modules/Product.dart';
 import 'package:app11/interfaces/Admin/models/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
@@ -71,9 +74,20 @@ Widget item_waiting_products(Product product) {
   );
 }
 
-void _saveProduct(Product product) async {
+void _saveProduct(BuildContext context,Product product) async {
   // Get a reference to the Firestore collection
   final productCollection = FirebaseFirestore.instance.collection('products');
+  try {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // L'utilisateur n'est pas connecté, traiter le cas d'erreur
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Your product is in the wait list products'),
+      ),
+    );
 
   try {
     // Create a new document and set its fields
@@ -81,10 +95,11 @@ void _saveProduct(Product product) async {
       'id': product.id,
       'name': product.name,
       'description': product.description,
-      'imageUrl': product.image,
+      'image': product.image,
       'color': product.image,
       'category': product.category,
       'publication_date': product.publication_date,
+      'user_id': user.uid, // Ajouter l'ID de l'utilisateur ici
     });
     print('Product saved successfully!');
   } catch (e) {
