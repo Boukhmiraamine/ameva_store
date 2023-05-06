@@ -1,9 +1,21 @@
+<<<<<<< HEAD
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EditUserDataForm extends StatefulWidget {
   final String userId;
+=======
+import 'package:app11/interfaces/Admin/models/usermodel.dart';
+import 'package:app11/interfaces/Admin/screens/showEditUserScreen.dart';
+import 'package:app11/profile_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb;
+import 'package:flutter/material.dart';
+import 'package:app11/interfaces/Admin/screens/showEditUserScreen.dart';
+
+import 'interfaces/Admin/utils/firebaseUser.dart';
+>>>>>>> 3d34d628e75a772b9968de154c555bec5eb68d32
 
   EditUserDataForm({required this.userId});
 
@@ -11,14 +23,69 @@ class EditUserDataForm extends StatefulWidget {
   _EditUserDataFormState createState() => _EditUserDataFormState();
 }
 
+<<<<<<< HEAD
 class _EditUserDataFormState extends State<EditUserDataForm> {
   final _formKey = GlobalKey<FormState>();
+=======
+class _EditProfileState extends State<EditProfile> {
+   late User _currentUser;
+>>>>>>> 3d34d628e75a772b9968de154c555bec5eb68d32
 
   String _fname = '';
   String _lname = '';
   String _email = '';
   String _phonenumber = '';
   String _adress = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser().then((currentUser) {
+      setState(() {
+        _currentUser = currentUser!;
+      });
+    });
+  }
+
+    Future<User> getCurrentUser()  async {
+    final fb.FirebaseAuth auth = fb.FirebaseAuth.instance;
+    final FirebaseFirestore db = FirebaseFirestore.instance;
+
+    // Récupère l'utilisateur actuellement connecté
+    final fb.User? firebaseUser = auth.currentUser;
+
+    if (firebaseUser != null) {
+      // Récupère les données utilisateur de la collection "users" dans Firestore
+      final DocumentSnapshot doc =
+      await db.collection('users').doc(firebaseUser?.uid).get();
+      final userData = doc.data() as Map<String, dynamic>;
+
+      // Crée un objet User avec les données récupérées de Firestore
+      final User currentUser = User.fromMap(userData, firebaseUser.uid);
+
+        _currentUser = currentUser;
+      return currentUser;
+
+    } else {
+      throw Exception('Aucun utilisateur n\'est connecté.');
+    }
+  }
+   void _showEditUserScreen(User user) async {
+     String? ID=user.uid;
+     final result = await Navigator.of(context).push(
+       MaterialPageRoute(
+         builder: (_) => EditUserScreen(user: user),
+       ),
+     );
+     if (result == true) {
+       getCurrentUser().then((user) {
+         setState(() {
+           _currentUser = _currentUser;
+         });
+       });
+     }
+
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +95,7 @@ class _EditUserDataFormState extends State<EditUserDataForm> {
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
       ),
+<<<<<<< HEAD
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')
@@ -127,10 +195,21 @@ class _EditUserDataFormState extends State<EditUserDataForm> {
             ),
           );
         },
+=======
+      body: Column(
+        children: [
+          IconButton(
+          onPressed: () => _showEditUserScreen(_currentUser),
+    icon: const Icon(Icons.edit),
+    ),
+
+        ],
+>>>>>>> 3d34d628e75a772b9968de154c555bec5eb68d32
       ),
     );
   }
 
+<<<<<<< HEAD
   void updateUserData() {
     FirebaseFirestore.instance.collection('users').doc(widget.userId).update({
       'first name': _fname,
@@ -148,4 +227,6 @@ class _EditUserDataFormState extends State<EditUserDataForm> {
       );
     });
   }
+=======
+>>>>>>> 3d34d628e75a772b9968de154c555bec5eb68d32
 }
