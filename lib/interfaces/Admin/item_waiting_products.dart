@@ -1,6 +1,7 @@
 import 'package:app11/Modules/Product.dart';
 import 'package:app11/interfaces/Admin/models/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
@@ -74,17 +75,22 @@ Widget item_waiting_products(Product product) {
 void _saveProduct(Product product) async {
   // Get a reference to the Firestore collection
   final productCollection = FirebaseFirestore.instance.collection('products');
-
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) {
+    // L'utilisateur n'est pas connecté, traiter le cas d'erreur
+    return;
+  }
   try {
     // Create a new document and set its fields
     await productCollection.add({
       'id': product.id,
       'name': product.name,
       'description': product.description,
-      'imageUrl': product.image,
+      'image': product.image,
       'color': product.image,
       'category': product.category,
       'publication_date': product.publication_date,
+      'user_id': user.uid, // Ajouter l'ID de l'utilisateur ici
     });
     print('Product saved successfully!');
   } catch (e) {
