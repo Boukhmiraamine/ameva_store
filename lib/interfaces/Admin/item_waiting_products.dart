@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:app11/Modules/Product.dart';
 import 'package:app11/interfaces/Admin/models/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -74,21 +72,14 @@ Widget item_waiting_products(Product product) {
   );
 }
 
-void _saveProduct(BuildContext context,Product product) async {
+void _saveProduct(Product product) async {
   // Get a reference to the Firestore collection
   final productCollection = FirebaseFirestore.instance.collection('products');
-  try {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      // L'utilisateur n'est pas connecté, traiter le cas d'erreur
-      return;
-    }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Your product is in the wait list products'),
-      ),
-    );
-
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) {
+    // L'utilisateur n'est pas connecté, traiter le cas d'erreur
+    return;
+  }
   try {
     // Create a new document and set its fields
     await productCollection.add({

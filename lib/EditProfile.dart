@@ -13,7 +13,8 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  late final User user ;
+  late final User user;
+
   late final String? fname;
   late final String? lname;
   late final String? email;
@@ -34,7 +35,7 @@ class _EditProfileState extends State<EditProfile> {
         children: [
           ProfileImage(),
           SizedBox(height: 30,),
-          EditUserScreen(user: ,),
+          EditUserScreen(user:,),
         ],
       ),
     );
