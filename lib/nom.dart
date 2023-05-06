@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:app11/mydrawerheader.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'interfaces/Admin/models/usermodel.dart';
+
 class Nom extends StatefulWidget {
-  Nom({Key? key}) : super(key: key);
-  // late final String? messageNom;
-  // late final String? messagePrenom;
+  const Nom({Key? key}) : super(key: key);
+
   @override
   State<Nom> createState() => _NomState();
 }
@@ -19,6 +19,22 @@ class _NomState extends State<Nom> {
   var prenom ;
   var messageNom;
   var messagePrenom;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   nomController = TextEditingController(text: widget.user.fname);
+  //   prenomController = TextEditingController(text: widget.user.lname);
+  // }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   nomController.dispose();
+  //   prenomController.dispose();
+  // }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,8 +127,8 @@ class _NomState extends State<Nom> {
                 onPressed: () {
                   if(numberForm.currentState!.validate()){
                     setState(() {
-                      messageNom=getNom();
-                      messagePrenom=getPrenom();
+                      getNom();
+                      getPrenom();
                     });
                     // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyDrawerHeader(profileNom: widget.messageNom,profilePrenom: widget.messagePrenom,)));
                   }

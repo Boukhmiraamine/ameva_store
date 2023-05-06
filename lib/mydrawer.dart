@@ -1,3 +1,5 @@
+import 'package:app11/EditProfile.dart';
+import 'package:app11/interfaces/Admin/utils/urllinks.dart';
 import 'package:app11/nom.dart';
 import 'package:app11/profile_image.dart';
 import 'package:app11/telephone.dart';
@@ -29,7 +31,7 @@ class _MydrawerState extends State<Mydrawer> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProfileImage(),
+                  builder: (context) => EditProfile(),
                 ),
               );
             },

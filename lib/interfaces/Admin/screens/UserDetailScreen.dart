@@ -48,7 +48,7 @@ class UserDetailScreen extends StatelessWidget {
               Text("First Name", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
-                '${user.fname!} ',
+                '${user.fname ?? ''}',
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class UserDetailScreen extends StatelessWidget {
               Text("Last Name", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
-                ' ${user.lname!}',
+                ' ${user.lname ?? ''}',
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.bold,
@@ -70,7 +70,7 @@ class UserDetailScreen extends StatelessWidget {
               Text("Email", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
-                user.email!,
+                user.email??'',
                 style: TextStyle(
                   fontSize: 15.0,
                     fontWeight: FontWeight.bold,
@@ -81,7 +81,7 @@ class UserDetailScreen extends StatelessWidget {
               Text("Phone", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
-                user.phone!,
+                user.phone??'',
                 style: TextStyle(
                   fontSize: 15.0,
                     fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class UserDetailScreen extends StatelessWidget {
               Text("PassWord", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
-                user.pw!,
+                user.pw??'',
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.bold,
@@ -105,7 +105,7 @@ class UserDetailScreen extends StatelessWidget {
               Text("Address", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               SizedBox(height: 20.0),
               Text(
-                user.adresse!,
+                user.adresse??'',
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.bold,

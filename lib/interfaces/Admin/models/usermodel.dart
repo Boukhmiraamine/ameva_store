@@ -30,7 +30,7 @@ class User {
       email: data['email'],
       phone: data['phone'],
       pw: data['pw'],
-      adresse: data['address'],
+      adresse: data['adresse'],
       profileImageUrl: data['profileImageUrl'],
     );
   }

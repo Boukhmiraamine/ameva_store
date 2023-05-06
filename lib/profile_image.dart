@@ -22,8 +22,6 @@ class _ProfileImageState extends State<ProfileImage> {
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
                 radius: 70.0,
@@ -32,36 +30,27 @@ class _ProfileImageState extends State<ProfileImage> {
                     ?AssetImage("assets/images/avatar.png") as ImageProvider
                     :FileImage(File(imageFile!.path)),
               ),
-              Container(
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.symmetric(horizontal: 0.0,vertical: 5.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.deepPurpleAccent,
+              Column(
+                children: [
+                  SizedBox(
+                    height: 10,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.edit,color: Colors.white,),
-                      TextButton(
-                        onPressed: (){
-                          showModalBottomSheet(
-                            context: context,
-                            builder: ((builder) => bottomsheet()),
-                          );
-                        },
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          disabledForegroundColor: Colors.deepPurpleAccent.withOpacity(0.38), // Disable color
-                        ),
-                        child: const Text(
-                          'Edit ',
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ),
-                    ],
-                  )
-                ),
+                  FloatingActionButton.extended(
+                    label: Text('Edit'),
+                    backgroundColor: Colors.deepPurpleAccent,
+                    icon: Icon(
+                      Icons.edit,
+                      size: 24.0,
+                    ),
+                    onPressed: () {
+                      showModalBottomSheet(
+                      context: context,
+                      builder: ((builder) => bottomsheet()),
+                    );
+                      },
+                  ),
+                ],
+              )
             ],
           ),
     );

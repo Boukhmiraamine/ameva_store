@@ -1,3 +1,8 @@
+
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
+
 import '../utils/firebaseUser.dart';
 import 'package:flutter/material.dart';
 import '../models/usermodel.dart' as usermodel;
@@ -10,6 +15,9 @@ class AddUserScreen extends StatefulWidget {
 
 class _AddUserScreenState extends State<AddUserScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _nameRegExp = RegExp(r"^[A-Za-z]+(?:[ _-][A-Za-z]+)*$");
+  final _emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  RegExp phoneRegex = RegExp(r'^[\d\s\+\.-]+$');
 
   late String _firstName;
   late String _lastName;
@@ -18,6 +26,25 @@ class _AddUserScreenState extends State<AddUserScreen> {
   late String _pw;
   late String _address;
   bool _obscureText=true;
+  File? _image;
+
+  Future _getImageFromCamera() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  Future _getImageFromGallery() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +61,59 @@ class _AddUserScreenState extends State<AddUserScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Add a profile picture'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  GestureDetector(
+                                    child: Text('Take a picture'),
+                                    onTap: () {
+                                      _getImageFromCamera();
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  SizedBox(height: 20),
+                                  GestureDetector(
+                                    child: Text('Select from gallery'),
+                                    onTap: () {
+                                      _getImageFromGallery();
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 70,
+                      backgroundColor: Colors.deepPurpleAccent,
+                      child:_image == null
+                          ? Icon(
+                        Icons.person,
+                        size: 70,
+                        color: Colors.pink,
+                      )
+                          : ClipOval(
+                        child: Image.file(
+                          _image! as File,
+                          width: 140,
+                          height: 140,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'First Name',
@@ -41,6 +121,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter Your First Name ';
+                    } else if (!_nameRegExp.hasMatch(value)) {
+                      return 'Invalid first name';
                     }
                     return null;
                   },
@@ -55,6 +137,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter Your Last Name';
+                    } else if (!_nameRegExp.hasMatch(value)) {
+                      return 'Invalid last name';
                     }
                     return null;
                   },
@@ -69,7 +153,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter Your Email';
-                    }
+                    } else if (!_emailRegExp.hasMatch(value)) {
+                              return 'Invalid email';}
                     return null;
                   },
                   onSaved: (value) {
@@ -83,6 +168,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter Your Phone';
+                    } else if (!phoneRegex.hasMatch(value)) {
+                      return 'Invalid Phone';
                     }
                     return null;
                   },
@@ -97,6 +184,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter Your Address';
+                    } else if (!_nameRegExp.hasMatch(value)) {
+                      return 'Invalid Adress';
                     }
                     return null;
                   },
@@ -128,6 +217,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter Your PassWord';
+                    } else if (value.length < 6) {
+                      return 'Password must be at least 6 characters long';
                     }
                     return null;
                   },
@@ -151,7 +242,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                           adresse: _address,
                           profileImageUrl: '',
                         );
-                        Firebase.addUser(newUser).then((value) {
+                        Firebase.addUser(newUser, profileImage: _image).then((value) {
                             _auth.createUserWithEmailAndPassword(
                               email: _email,
                                 password: _pw,
@@ -161,7 +252,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                         });});
                       }
                     },
-                    child: Text('Enregistrer'),
+                    child: Text('Save'),
                     style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.deepPurple)),
                   ),
                 ),
