@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -5,18 +8,51 @@ import 'dart:io';
 import 'package:app11/mydrawerheader.dart';
 
 
+
+
+
 class ProfileImage extends StatefulWidget {
   ProfileImage({Key? key}) : super(key: key);
 
-  // late final String? paths;
 
   @override
   State<ProfileImage> createState() => _ProfileImageState();
 }
 
 class _ProfileImageState extends State<ProfileImage> {
-  File? imageFile ;
+  File? _imageFile ;
   final ImagePicker _picker = ImagePicker() ;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future uploadImage() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    String uid = user!.uid;
+
+    final Reference storageRef =
+    FirebaseStorage.instance.ref().child('profile_images/$uid.jpg');
+
+    UploadTask uploadTask = storageRef.putFile(_imageFile!);
+    TaskSnapshot snapshot = await uploadTask;
+
+    if (snapshot.state == TaskState.success) {
+      final String downloadUrl = await snapshot.ref.getDownloadURL();
+
+      // Save the download URL to the user's profile or database
+      // (e.g., Firestore, Realtime Database)
+      await _firestore.collection('users').doc(uid).set({
+        'profileImageUrl': downloadUrl,
+      }, SetOptions(merge: true));
+
+
+      print('Image uploaded successfully. Download URL: $downloadUrl');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,28 +62,44 @@ class _ProfileImageState extends State<ProfileImage> {
               CircleAvatar(
                 radius: 70.0,
                 backgroundImage:
-                imageFile == null
+                _imageFile == null
                     ?AssetImage("assets/images/avatar.png") as ImageProvider
-                    :FileImage(File(imageFile!.path)),
+                    :FileImage(File(_imageFile!.path)),
               ),
               Column(
                 children: [
                   SizedBox(
                     height: 10,
                   ),
-                  FloatingActionButton.extended(
-                    label: Text('Edit'),
-                    backgroundColor: Colors.deepPurpleAccent,
-                    icon: Icon(
-                      Icons.edit,
-                      size: 24.0,
-                    ),
-                    onPressed: () {
-                      showModalBottomSheet(
-                      context: context,
-                      builder: ((builder) => bottomsheet()),
-                    );
-                      },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FloatingActionButton.extended(
+                        label: Text('Edit'),
+                        backgroundColor: Colors.deepPurpleAccent,
+                        icon: Icon(
+                          Icons.edit,
+                          size: 24.0,
+                        ),
+                        onPressed: () {
+                          showModalBottomSheet(
+                          context: context,
+                          builder: ((builder) => bottomsheet()),
+                        );
+                          },
+                      ),
+                      SizedBox(width: 10,),
+                      FloatingActionButton.extended(
+                        label: Text('Save'),
+                        backgroundColor: Colors.deepPurpleAccent,
+                        icon: Icon(
+                          Icons.save,
+                          size: 24.0,
+                        ),
+                        onPressed: _imageFile != null ? uploadImage : null,
+                      ),
+                    ],
                   ),
                 ],
               )
@@ -73,6 +125,7 @@ class _ProfileImageState extends State<ProfileImage> {
               TextButton(
                   onPressed: (){
                     takePhoto(ImageSource.camera);
+                    uploadImage();
                   },
                   child: Column(
                     children: [
@@ -85,6 +138,7 @@ class _ProfileImageState extends State<ProfileImage> {
               TextButton(
                   onPressed: (){
                     takePhoto(ImageSource.gallery);
+                    uploadImage();
                     // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyDrawerHeader(profileImage: imageFile,)));
                   },
                   child: Column(
@@ -103,7 +157,7 @@ class _ProfileImageState extends State<ProfileImage> {
   void takePhoto(ImageSource source) async{
     final pickedFile = await _picker.pickImage(source: source);
     setState(() {
-      imageFile= File(pickedFile!.path) ;
+      _imageFile= File(pickedFile!.path) ;
       // MyDrawerHeader(imageField: pickedFile!.path,);
       // print(" ----------------------path ${imageFile!.path}");
       // print("hello world");
