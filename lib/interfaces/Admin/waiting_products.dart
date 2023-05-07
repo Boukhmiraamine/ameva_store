@@ -149,7 +149,7 @@ class _waiting_productsState extends State<waiting_products> {
                   child: IconButton(
                       onPressed: () {
                         setState(() {
-                         /* Navigator.push(context,
+                          /* Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                                 return FiltringProduct(product: listProduct);
                               }));*/
@@ -171,49 +171,57 @@ class _waiting_productsState extends State<waiting_products> {
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  }
+                  if(snapshot.hasData){
+                    if(snapshot.data!.size==0) {
+                      return Center(child: Text("No waiting products."),);
+                    }
+                    else {
 
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
+                      if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
 
-                  final products = snapshot.data!.docs
-                      .map((doc) => Product.fromSnapshot(doc))
-                      .toList();
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
 
+                      final products = snapshot.data!.docs
+                          .map((doc) => Product.fromSnapshot(doc))
+                          .toList();
 
-                  return GridView.builder(
-                      itemCount: products.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final product = products[index];
+                      return GridView.builder(
+                          itemCount: products.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final product = products[index];
 
-                        return GestureDetector(
-                          child: item_waiting_products(product),
-                          onTap: () {
-                            setState(() {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ProductDetail(product: product)),
-                              );
-                            });
+                            return GestureDetector(
+                              child: item_waiting_products(product),
+                              onTap: () {
+                                setState(() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProductDetail(product: product)),
+                                  );
+                                });
+                              },
+                            );
                           },
-                        );
-                      },
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 0,
-                        mainAxisExtent: 330,
-                      ));
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 0,
+                            mainAxisExtent: 330,
+                          ));
+                    }
+                  }
+                  else{
+                    return Center(child: Text("Could not access data.", style: TextStyle(color: Colors.red),),);
+                  }
                 }),
           ),
         ],
       ),
     );
   }
-
-
 }

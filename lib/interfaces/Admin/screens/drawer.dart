@@ -18,7 +18,7 @@ class MyDrawerState extends State<MyDrawer> {
   var value;
   String? user;
   String? username;
-  
+
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class MyDrawerState extends State<MyDrawer> {
     username = await value["token1"];
     return [user, username];
   }
-  
+
   Color mainColor = Constants.mainColor;
   Color secColor = Constants.secTextColor;
   Color textColor = Constants.textColor;
@@ -43,7 +43,7 @@ class MyDrawerState extends State<MyDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        children: <Widget>[
+        children: [
           _drawerHeader(),
           _dashboard(context),
           _products(),
@@ -57,35 +57,36 @@ class MyDrawerState extends State<MyDrawer> {
 
   Widget _drawerHeader() {
     var app = DrawerHeader(
-      decoration: BoxDecoration(
-        color: secColor,
-      ),
       child: Container(
+        height: 200,
+        width: double.infinity,
+        color: Colors.deepPurple,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Material(
-              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child:
-                    Image.asset('images/admin.png', width: 80.0, height: 80.0),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              height: 100,
+              decoration: BoxDecoration(
+                //shape: BoxShape.circle,
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))
               ),
+              child: Image.asset('assets/images/admin.png', width: 100.0, height: 80.0),
             ),
             Text(
               (user == null)? 'Admin': user!,
               style: TextStyle(
-                  color: textColor,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold),
+                  fontSize: 12,
+                  color: Colors.white),
             ),
             Text(
               (username == null)? 'Admin': 'Username: '+username!,
-              style: TextStyle(color: mainColor, fontSize: 10.0),
+              style: TextStyle(color: Colors.white, fontSize: 10.0),
             ),
             // Text(
             //   'Admin',
             //   style: TextStyle(
-            //     color: mainColor, 
+            //     color: mainColor,
             //     fontSize: 10.0
             //     ),
             //   )
@@ -98,8 +99,9 @@ class MyDrawerState extends State<MyDrawer> {
 
   Widget _dashboard(BuildContext context) {
     var app = ListTile(
-      leading: Icon(Icons.home),
+      leading: Icon(Icons.home, color: Colors.deepPurple.shade200),
       title: Text('Dashboard'),
+      trailing: Icon(Icons.arrow_right),
       onTap: () {
         Navigator.popAndPushNamed(context, '/home');
       },
@@ -110,8 +112,9 @@ class MyDrawerState extends State<MyDrawer> {
 
   Widget _logout(BuildContext context) {
     var app = ListTile(
-      leading: Icon(Icons.logout),
+      leading: Icon(Icons.logout,color: Colors.deepPurple.shade200),
       title: Text('Log Out'),
+      trailing: Icon(Icons.arrow_right),
       onTap: () {
         Navigator.popAndPushNamed(context, '/logout');
       },
@@ -122,8 +125,9 @@ class MyDrawerState extends State<MyDrawer> {
 
   Widget _WaitingProduct() {
     var app = ListTile(
-      leading: Icon(Icons.shop),
+      leading: Icon(Icons.shop,color: Colors.deepPurple.shade200),
       title: Text('Waiting Products'),
+      trailing: Icon(Icons.arrow_right),
       onTap: () {
         //Navigator.popAndPushNamed(context, '/category');
         Navigator.popAndPushNamed(context, '/waitingproduct');
@@ -134,8 +138,9 @@ class MyDrawerState extends State<MyDrawer> {
 
   Widget _users() {
     var app = ListTile(
-      leading: Icon(Icons.people),
+      leading: Icon(Icons.people,color: Colors.deepPurple.shade200),
       title: Text('Users'),
+      trailing: Icon(Icons.arrow_right),
       onTap: () {
         Navigator.popAndPushNamed(context, '/users');
       },
@@ -145,8 +150,9 @@ class MyDrawerState extends State<MyDrawer> {
 
   Widget _products() {
     var app = ListTile(
-      leading: Icon(Icons.devices_other),
+      leading: Icon(Icons.devices_other,color: Colors.deepPurple.shade200),
       title: Text('Products'),
+      trailing: Icon(Icons.arrow_right),
       onTap: ()
       {
         Navigator.popAndPushNamed(context, '/approved');

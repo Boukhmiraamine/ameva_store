@@ -22,16 +22,37 @@ Widget item_waiting_products(Product product) {
       child: Column(
         children: [
           ListTile(
-            title: Text(product.name),
+            title: Text(product.name, style: TextStyle(fontSize: 20, color: Colors.black,fontWeight: FontWeight.bold)),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                Text(product.description),
-                Text(product.category),
-                ElevatedButton(
-                  onPressed: () async {
-                    _saveProduct(product);
+                Text(
+                  "Category: #${product.category}",
+                  style: TextStyle(
+                      fontSize: 15, color: Colors.black54,fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: Colors.black45),
+                    shape: BoxShape.rectangle,
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        product.image,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 13,),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)),
+                      onPressed: () async {
+                        _saveProduct(product);
 
 
 
@@ -40,29 +61,31 @@ Widget item_waiting_products(Product product) {
                             .doc(product.id)
                             .delete();
                         print('Product deleted');
-                   
 
 
 
-                  },
-                  child: Text("Accept product"),
+
+                      },
+                      child: Text("Accept"),
+                    ),
+                    SizedBox(width: 10,),
+                    ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)),
+                      onPressed: () async {
+                        try {
+                          await FirebaseFirestore.instance
+                              .collection('waiting_products')
+                              .doc(product.id)
+                              .delete();
+                          print('Product deleted');
+                        } catch (error) {
+                          print('Error deleting product: $error');
+                        }
+                      },
+                      child: Text("Refuse"),
+                    )
+                  ],
                 ),
-                ElevatedButton(
-
-
-                  onPressed: () async {
-                    try {
-                      await FirebaseFirestore.instance
-                          .collection('waiting_products')
-                          .doc(product.id)
-                          .delete();
-                      print('Product deleted');
-                    } catch (error) {
-                      print('Error deleting product: $error');
-                    }
-                  },
-                  child: Text("refuse"),
-                )
               ],
             ),
           ),
