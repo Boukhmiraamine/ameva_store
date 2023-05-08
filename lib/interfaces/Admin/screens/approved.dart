@@ -47,47 +47,47 @@ class _ApprovedProductsState extends State<ApprovedProducts> {
         iconTheme: IconThemeData(color: Colors.white),),
       drawer: MyDrawer(),
       body: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('products')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  }
+          stream: FirebaseFirestore.instance
+              .collection('products')
+              .snapshots(),
+          builder: (BuildContext context,
+              AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
 
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
 
-                  final products = snapshot.data!.docs
-                      .map((doc) => Product.fromSnapshot(doc))
-                      .toList();
+            final products = snapshot.data!.docs
+                .map((doc) => Product.fromSnapshot(doc))
+                .toList();
 
-                  return GridView.builder(
-                      itemCount: products.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final product = products[index];
-                        return GestureDetector(
-                          child: getApprovedProducts(product),
-                          onTap: () {
-                            setState(() {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ProductDetail(product: product)),
-                              );
-                            });
-                          },
+            return GridView.builder(
+                itemCount: products.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final product = products[index];
+                  return GestureDetector(
+                    child: getApprovedProducts(product, context),
+                    onTap: () {
+                      setState(() {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ProductDetail(product: product)),
                         );
-                      },
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 0,
-                        mainAxisExtent: 330,
-                      ));
-                }),
+                      });
+                    },
+                  );
+                },
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 0,
+                  mainAxisExtent: 330,
+                ));
+          }),
     );
 
     // TODO: implement build
@@ -95,7 +95,7 @@ class _ApprovedProductsState extends State<ApprovedProducts> {
   }
 }
 
-Widget getApprovedProducts(Product product){
+Widget getApprovedProducts(Product product,BuildContext context){
   return Card(
     color: Colors.grey[300],
     shape: RoundedRectangleBorder(
@@ -111,12 +111,69 @@ Widget getApprovedProducts(Product product){
       child: Column(
         children: [
           ListTile(
-            title: Text(product.name),
+            title: Text(product.name, style: TextStyle(fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.bold)),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.description),
-                Text(product.category),
+                SizedBox(height: 5,),
+                Text("Category: #${product.category}",
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10,),
+                Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: Colors.black45),
+                    shape: BoxShape.rectangle,
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        product.image,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 5,),
+                Row(
+                  children: [
+                    ElevatedButton(
+                        style: ButtonStyle(
+                          fixedSize: const MaterialStatePropertyAll<Size>(Size(80,20)),
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                              Colors.deepPurpleAccent),),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>
+                                ProductDetail(product: product)),
+                          );
+                        },
+                        child: Text("Details")
+                    ),
+                    SizedBox(width: 5,),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          fixedSize: const MaterialStatePropertyAll<Size>(Size(80,20)),
+                          backgroundColor: MaterialStatePropertyAll<Color>(Colors
+                              .red)),
+                      onPressed: () async {
+                        await FirebaseFirestore.instance
+                            .collection('products')
+                            .doc(product.id)
+                            .delete();
+                        print('Product deleted');
+                      },
+                      child: Text("Delete"),
+                    ),
+                  ],
+                )
               ],
             ),
           ),

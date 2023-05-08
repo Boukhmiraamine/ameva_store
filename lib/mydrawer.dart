@@ -25,59 +25,59 @@ class _MydrawerState extends State<Mydrawer> {
           SizedBox(height: 14,),
           ListTile(
             leading: Icon(Icons.edit,color: Colors.deepPurple.shade200),
-            title: Text("Profile Picture",style: TextStyle(fontSize: 16,color: Colors.black),),
+            title: Text("Edit Profile",style: TextStyle(fontSize: 16,color: Colors.black),),
             trailing: Icon(Icons.arrow_right),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditProfile(),
+                  builder: (context) => EditUserDataForm(userId: FirebaseAuth.instance.currentUser!.uid),
                 ),
               );
             },
           ),
-          SizedBox(height: 14,),
-          ListTile(
-            leading: Icon(Icons.edit,color: Colors.deepPurple.shade200),
-            title: Text("Name",style: TextStyle(fontSize: 16,color: Colors.black),),
-            trailing: Icon(Icons.arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Nom(),
-                ),
-              );
-            },
-          ),
-          SizedBox(height: 14,),
-          ListTile(
-            leading: Icon(Icons.edit,color: Colors.deepPurple.shade200),
-            title: Text("Phone Number",style: TextStyle(fontSize: 16,color: Colors.black),),
-            trailing: Icon(Icons.arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Phone(),
-                ),
-              );
-            },
-          ),
-          SizedBox(height: 14,),
-          ListTile(
-            leading: Icon(Icons.edit,color: Colors.deepPurple.shade200),
-            title: Text("Email qnd Password",style: TextStyle(fontSize: 16,color: Colors.black),),
-            trailing: Icon(Icons.arrow_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EmailEtPassword(),
-                ),
-              );
-            },
-          ),
+          // SizedBox(height: 14,),
+          // ListTile(
+          //   leading: Icon(Icons.edit,color: Colors.deepPurple.shade200),
+          //   title: Text("Name",style: TextStyle(fontSize: 16,color: Colors.black),),
+          //   trailing: Icon(Icons.arrow_right),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => Nom(),
+          //       ),
+          //     );
+          //   },
+          // ),
+          // SizedBox(height: 14,),
+          // ListTile(
+          //   leading: Icon(Icons.edit,color: Colors.deepPurple.shade200),
+          //   title: Text("Phone Number",style: TextStyle(fontSize: 16,color: Colors.black),),
+          //   trailing: Icon(Icons.arrow_right),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => Phone(),
+          //       ),
+          //     );
+          //   },
+          // ),
+          // SizedBox(height: 14,),
+          // ListTile(
+          //   leading: Icon(Icons.edit,color: Colors.deepPurple.shade200),
+          //   title: Text("Email qnd Password",style: TextStyle(fontSize: 16,color: Colors.black),),
+          //   trailing: Icon(Icons.arrow_right),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => EmailEtPassword(),
+          //       ),
+          //     );
+          //   },
+          // ),
           SizedBox(height: 170,),
           ListTile(
             leading: Icon(Icons.logout,color: Colors.deepPurple.shade200),

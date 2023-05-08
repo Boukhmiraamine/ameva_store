@@ -54,7 +54,7 @@ class DashboardScreen extends StatelessWidget {
       elevation: 10,
       margin: EdgeInsets.all(16.0),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(12.0),
         child: StreamBuilder<QuerySnapshot>(
           stream: firestore.collection('users').snapshots(),
           builder: (context, snapshot) {
@@ -72,12 +72,36 @@ class DashboardScreen extends StatelessWidget {
                     children: [
                       Icon(Icons.person),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(6.0),
                         child: Text(
-                          'Number of Users : $userCount',
-                          style: TextStyle(fontSize: 20.0, ),
+                          'Users',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
                         ),
                       ),
+                      Stack(
+                        children: <Widget>[
+                          // Stroked text as border.
+                          Text(
+                            '$userCount',
+                            style: TextStyle(
+                              fontSize: 30,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 6
+                                ..color = Colors.cyan.shade200!,
+                            ),
+                          ),
+                          // Solid text as fill.
+                          Text(
+                            '$userCount',
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.grey[200],
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -98,7 +122,7 @@ class DashboardScreen extends StatelessWidget {
       elevation: 10,
       margin: EdgeInsets.all(16.0),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(12.0),
         child: StreamBuilder<QuerySnapshot>(
           stream: firestore.collection('products').snapshots(),
           builder: (context, snapshot) {
@@ -115,17 +139,39 @@ class DashboardScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.shop),
-                      Padding(padding: const EdgeInsets.all(8.0),
+                      Padding(padding: const EdgeInsets.all(6.0),
                         child: Text(
-                          'Number of Products : $productCount',
-                          style: TextStyle(fontSize: 20.0),
+                          'Products',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
                         ),
+                      ),
+                      Stack(
+                        children: <Widget>[
+                          // Stroked text as border.
+                          Text(
+                            '$productCount',
+                            style: TextStyle(
+                              fontSize: 30,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 6
+                                ..color = Colors.deepPurpleAccent.shade100!,
+                            ),
+                          ),
+                          // Solid text as fill.
+                          Text(
+                            '$productCount',
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.grey[200],
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   ),
                 ),
-
-
               ],
             );
           },
@@ -142,7 +188,7 @@ class DashboardScreen extends StatelessWidget {
       elevation: 10,
       margin: EdgeInsets.all(16.0),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(12.0),
         child: StreamBuilder<QuerySnapshot>(
           stream: firestore.collection('waiting_products').snapshots(),
           builder: (context, snapshot) {
@@ -158,17 +204,39 @@ class DashboardScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.watch_later),
-                      Padding(padding: const EdgeInsets.all(8.0),
+                      Padding(padding: const EdgeInsets.all(6.0),
                         child:  Text(
-                          'Number of Waiting Products : $waitingProductCount',
-                          style: TextStyle(fontSize: 20.0),
+                          'Waiting Products',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
                         ),
+                      ),
+                      Stack(
+                        children: <Widget>[
+                          // Stroked text as border.
+                          Text(
+                            '$waitingProductCount',
+                            style: TextStyle(
+                              fontSize: 30,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 6
+                                ..color = Colors.orangeAccent.shade100!,
+                            ),
+                          ),
+                          // Solid text as fill.
+                          Text(
+                            '$waitingProductCount',
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.grey[200],
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   ),
                 ),
-
-
               ],
             );
           },
@@ -186,14 +254,14 @@ class DashboardScreen extends StatelessWidget {
       elevation: 10,
       margin: EdgeInsets.all(16.0),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(12.0),
         child: StreamBuilder<QuerySnapshot>(
           stream: firestore.collection('exchanges').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return CircularProgressIndicator();
             }
-            int ExchangeHistoryCount = snapshot.data!.size;
+            int exchangeHistoryCount = snapshot.data!.size;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -202,17 +270,39 @@ class DashboardScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.currency_exchange_outlined),
-                      Padding(padding: const EdgeInsets.all(8.0),
+                      Padding(padding: const EdgeInsets.all(6.0),
                         child:  Text(
-                          'Number of Exchange Produts : $ExchangeHistoryCount',
-                          style: TextStyle(fontSize: 20.0),
+                          'Exchanged Products',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
                         ),
+                      ),
+                      Stack(
+                        children: <Widget>[
+                          // Stroked text as border.
+                          Text(
+                            '$exchangeHistoryCount',
+                            style: TextStyle(
+                              fontSize: 30,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 6
+                                ..color = Colors.pinkAccent.shade100!,
+                            ),
+                          ),
+                          // Solid text as fill.
+                          Text(
+                            '$exchangeHistoryCount',
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.grey[200],
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   ),
                 ),
-
-
               ],
             );
           },

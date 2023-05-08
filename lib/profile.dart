@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:app11/mydrawer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -19,6 +22,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? email='';
   String? phonenumber='';
   String? adresse='';
+  // String? profileImage ;
+
 
   Future _getdatafromdatabase() async {
     await FirebaseFirestore.instance.collection('users')
@@ -33,6 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           email = snapshot.data()!['email'];
           phonenumber = snapshot.data()!['phone'];
           adresse = snapshot.data()!['adresse'];
+          // profileImage = snapshot.data()!['profileImageUrl'];
         });
       }
     });
@@ -42,6 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     _getdatafromdatabase();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,9 +93,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: <Widget>[
                   CircleAvatar(
                           radius: 60.0,
-                          backgroundImage:
-                          NetworkImage('https://images.unsplash.com/photo-1520341280432-4749d4d7bcf9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bWVuJTIwc21pbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60'),
-                        ),
+                          backgroundImage: NetworkImage(profileImage!),
+                  ),
                   SizedBox(
                     height: 10,
                   ),
