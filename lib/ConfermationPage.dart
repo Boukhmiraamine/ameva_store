@@ -14,20 +14,46 @@ class _ConfermationPageState extends State<ConfermationPage> {
         appBar: AppBar(
           title: Text("Confermation"),
         ),
+        body: Column(
 
-        body :Column(
           children: [
-
-            ElevatedButton(onPressed: (){
-
-
-            }, child: Row(children: [Text("Conferme")],)),
-            ElevatedButton(onPressed: (){
-
-
-            }, child: Row(children: [Text("refuse")],))
+            ElevatedButton(
+                onPressed: () {
+                  FirebaseFirestore.instance
+                      .collection('exchanges')
+                      .where('targetUserId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                      .get()
+                      .then((querySnapshot) {
+                    querySnapshot.docs.forEach((doc) {
+                      FirebaseFirestore.instance
+                          .collection('exchanges')
+                          .doc(doc.id)
+                          .update({'reponse': 'je confirme'});
+                    });
+                  });
+                },
+                child: Row(
+                  children: [Text("Conferme")],
+                )),
+            ElevatedButton(
+                onPressed: () {
+                  FirebaseFirestore.instance
+                      .collection('exchanges')
+                      .where('targetUserId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                      .get()
+                      .then((querySnapshot) {
+                    querySnapshot.docs.forEach((doc) {
+                      FirebaseFirestore.instance
+                          .collection('exchanges')
+                          .doc(doc.id)
+                          .update({'reponse': 'je refuse'});
+                    });
+                  });
+                },
+                child: Row(
+                  children: [Text("refuse")],
+                ))
           ],
-        )
-    );
+        ));
   }
 }
