@@ -1,3 +1,4 @@
+import 'package:app11/ConfermationPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,8 +11,16 @@ class MyRequestes extends StatefulWidget {
 class _MyRequestesState extends State<MyRequestes> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('exchanges').where('proposerUserName', isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots(),
+    return Scaffold(
+        appBar: AppBar(
+        title: Text("My Requests"),
+    ),
+
+      body :StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('exchanges')
+          .where('targetUserId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -27,28 +36,36 @@ class _MyRequestesState extends State<MyRequestes> {
             final exchangeDoc = exchangeDocs[index];
             final exchangeData = exchangeDoc.data();
 
-            return ListTile(
-              leading: Icon(Icons.person),
-              title: Text((exchangeData as Map<String, dynamic>)['proposerProductName']),
-              subtitle: Text((exchangeData as Map<String, dynamic>)['targetProductName']),
-              trailing: Icon(Icons.arrow_forward),
-              onTap: () {
-                setState(() {
+            return Card(
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              elevation: 5.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: ListTile(
+                leading: Icon(Icons.person),
+                title: Text((exchangeData as Map<String, dynamic>)['proposerProductName']),
+                subtitle: Text((exchangeData as Map<String, dynamic>)['description']),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: () {
+                  setState(() {
 
-                });
-              },
-              selected: true, // Si le ListTile est sélectionné ou non
-              enabled: false, // Si le ListTile est activé ou non
-              dense: true, // Si le ListTile a une hauteur réduite ou non
-              contentPadding: EdgeInsets.all(16.0), // Padding du contenu
-              shape: RoundedRectangleBorder( // Bordure du ListTile
-                borderRadius: BorderRadius.circular(8.0),
-                side: BorderSide(width: 1, color: Colors.grey),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ConfermationPage()),
+                    );
+
+                  });
+                },
+                selected: true, // Whether the ListTile is selected or not
+                enabled: true, // Whether the ListTile is enabled or not
+                dense: false, // Whether the ListTile has reduced height or not
               ),
             );
           },
         );
       },
+    )
     );
   }
 }
