@@ -138,7 +138,7 @@ class _HomeState extends State<Home> {
                       });
                     },
                     icon: Icon(
-                      Icons.shopping_cart,
+                      Icons.message,
                       size: 30,
                     ),
                     // color: colorFav,
