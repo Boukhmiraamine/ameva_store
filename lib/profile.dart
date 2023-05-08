@@ -22,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? email='';
   String? phonenumber='';
   String? adresse='';
-  // String? profileImage ;
+  String? profileImage ;
 
 
   Future _getdatafromdatabase() async {

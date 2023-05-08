@@ -1,3 +1,4 @@
+import 'package:app11/MyRequestes.dart';
 import 'package:app11/interfaces/Admin/models/usermodel.dart';
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -126,7 +127,15 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       Navigator.push(
                           context, MaterialPageRoute(builder: (c) => Home()));
-                      setState(() {});
+                      setState(() {
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>MyRequestes()),
+                        );
+
+                      });
                     },
                     icon: Icon(
                       Icons.shopping_cart,
