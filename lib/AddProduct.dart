@@ -22,6 +22,7 @@ class _AddProductPageState extends State<AddProductPage> {
   var _productImageUrl;
   var _productColor;
   var _productCategory;
+
   File? _imageFile;
 
   List<String> _categories = ['Electronics', 'Clothing', 'Home Goods'];

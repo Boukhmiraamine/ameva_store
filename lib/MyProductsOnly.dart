@@ -9,8 +9,8 @@ import 'Modules/Product.dart';
 
 class MyProductsOnly extends StatefulWidget {
 
-
-  const MyProductsOnly({Key? key}) : super(key: key);
+final Product targetProduct;
+  const MyProductsOnly({Key? key ,required this.targetProduct}) : super(key: key);
   @override
   State<MyProductsOnly> createState() => _MyProductsOnlyState();
 }
@@ -76,12 +76,23 @@ class _MyProductsOnlyState extends State<MyProductsOnly> {
                         return GestureDetector(
                           child: MyProductsItem(product),
                           onTap: () {
+
                             setState(() {
+                              print("Target Product: ${widget.targetProduct.name}");
+                              final selectedProduct = Product(
+                                id: product.id,
+                                name: product.name,
+                                description: product.description,
+                                image: product.image,
+                                category: product.category,
+                                publication_date: product.publication_date,
+                              );
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        SendRequestPage(product: product)),
+                                        SendRequestPage(product: selectedProduct,targetProduct: widget.targetProduct)),
+
                               );
                             });
                           },

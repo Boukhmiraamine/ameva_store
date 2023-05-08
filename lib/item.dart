@@ -1,129 +1,149 @@
 import 'package:app11/Modules/Product.dart';
 import 'package:app11/MyProductsOnly.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-Widget ProductItem(BuildContext context,Product Product,) {
+Widget ProductItem(BuildContext context, Product product) {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   return Card(
     color: Colors.grey[300],
     shape: RoundedRectangleBorder(
       side: BorderSide(
-
         width: 2,
         color: Colors.deepPurple.shade300,
-
       ),
-      borderRadius: BorderRadius.only(
-        bottomRight: Radius.circular(10),
-        bottomLeft: Radius.circular(10),
-        topLeft: Radius.circular(10),
-        topRight: Radius.circular(10),
-      ),
+      borderRadius: BorderRadius.circular(10),
     ),
     child: Container(
-        height: 500,
-        width: 500,
-        child: Column(
-          children: [
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
-              child: Container(
-                height: 200,
-                width: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.black45),
-                  shape: BoxShape.rectangle,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      Product.image,
+      height: 500,
+      width: 500,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
+            child: Container(
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: Colors.black45),
+                shape: BoxShape.rectangle,
+                image: DecorationImage(
+                  image: NetworkImage(
+                    product.image,
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      product.name,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-             Column(
-              children: [
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        Product.name,
-                        style: TextStyle(
-                            fontSize: 20, color: Colors.black,fontWeight: FontWeight.bold),
+                    Text(
+                      "Category: #${product.category}",
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
+                    ),
+                    FutureBuilder<DocumentSnapshot>(
+                      future: firestore.collection('products').doc(product.id).get(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return Text('Loading...');
+                        }
 
-                        "Category: #${Product.category}",
-                        style: TextStyle(
-                            fontSize: 15, color: Colors.black54,fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        children: [
-                          Text(
+                        var data = snapshot.data!.data() as Map<String, dynamic>;
+                        var userId = data['user_id'];
 
-                            "",
-                            style: TextStyle(fontSize: 19),
+                        return FutureBuilder<DocumentSnapshot>(
+                          future: firestore.collection('users').doc(userId).get(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text('Loading...');
+                            }
 
-                          ),
-                          Text(
+                            var userData = snapshot.data!.data() as Map<String, dynamic>;
+                            var firstName = userData['first name'];
+                            var lastname = userData['last name'];
 
-                            "${Product.category} Dhs",
-                            style: TextStyle(fontSize: 19, color: Colors.red,fontWeight: FontWeight.bold),
-
-
-                          ),
-                        ],
-                      ),
-
-
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Container(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0.8, 0, 0.8, 0.8),
-                  child: SizedBox(
-
-                    width: 140,
-                    height: 40,
+                            return Text(
+                              "added by: #$firstName $lastname",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
 
 
-                    child: ElevatedButton(
-
-                        style: ButtonStyle(
-
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple.shade300),
+                    Row(
+                      children: [
+                        Text(
+                          "",
+                          style: TextStyle(fontSize: 19),
                         ),
-                        onPressed: () {
-                          print("****************************************");
-                          print(".."+Product.id);
-
-                          print("****************************************");
-
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MyProductsOnly()),
-                          );
-
-                        },
-                        child: Row(
-                          children: [
-                            Icon(Icons.send),
-                            Text("  Rechage" ,style: TextStyle(fontSize: 20))
-                          ],
-                        )),
-                  ),
+                        /*  Text(
+                          "${Product.category} ",
+                          style: TextStyle(
+                            fontSize: 19,
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),*/
+                      ],
+                    ),
+                  ],
                 ),
+              )
+            ],
+          ),
+          Flexible(
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                MaterialStateProperty.all<Color>(Colors.deepPurple.shade300),
               ),
-            )
-          ],
-        )),
+              onPressed: () {
+                print("****************************************");
+                print("..${product.id}");
+                print("****************************************");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyProductsOnly(targetProduct:product)),
+                );
+              },
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Icon(Icons.send),
+                  ),
+                  Text("exchange", style: TextStyle(fontSize: 20)),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
   );
 }

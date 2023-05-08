@@ -1,6 +1,7 @@
 import 'package:app11/interfaces/Admin/models/usermodel.dart';
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../AddProduct.dart';
 import '../Modules/Product.dart';
@@ -177,6 +178,7 @@ class _HomeState extends State<Home> {
             child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('products')
+                    .where('user_id', isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
