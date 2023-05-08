@@ -82,10 +82,10 @@ Widget ProductItem(BuildContext context, Product product) {
                             var lastname = userData['last name'];
 
                             return Text(
-                              "added by: #$firstName $lastname",
+                              "added by : $firstName $lastname",
                               style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black54,
+                                fontSize: 16,
+                                color: Colors.redAccent,
                                 fontWeight: FontWeight.bold,
                               ),
                             );
