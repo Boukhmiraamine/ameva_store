@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -10,7 +11,7 @@ class _MyRequestesState extends State<MyRequestes> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('exchanges').snapshots(),
+      stream: FirebaseFirestore.instance.collection('exchanges').where('proposerUserName', isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -27,9 +28,23 @@ class _MyRequestesState extends State<MyRequestes> {
             final exchangeData = exchangeDoc.data();
 
             return ListTile(
-              title: Text(exchangeData['proposerProductName']),
-              subtitle: Text(exchangeData['targetProductName']),
-              trailing: Text(exchangeData!['status']),
+              leading: Icon(Icons.person),
+              title: Text((exchangeData as Map<String, dynamic>)['proposerProductName']),
+              subtitle: Text((exchangeData as Map<String, dynamic>)['targetProductName']),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () {
+                setState(() {
+
+                });
+              },
+              selected: true, // Si le ListTile est sélectionné ou non
+              enabled: false, // Si le ListTile est activé ou non
+              dense: true, // Si le ListTile a une hauteur réduite ou non
+              contentPadding: EdgeInsets.all(16.0), // Padding du contenu
+              shape: RoundedRectangleBorder( // Bordure du ListTile
+                borderRadius: BorderRadius.circular(8.0),
+                side: BorderSide(width: 1, color: Colors.grey),
+              ),
             );
           },
         );
