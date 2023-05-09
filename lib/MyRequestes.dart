@@ -1,4 +1,5 @@
 import 'package:app11/ConfermationPage.dart';
+import 'package:app11/MyResponsePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,14 +10,45 @@ class MyRequestes extends StatefulWidget {
 }
 
 class _MyRequestesState extends State<MyRequestes> {
+  int _currentIndex = 0;
+
+  final List<Widget> _children = [    MyRequestsPage(),    MyResponsePage(),  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-        title: Text("My Requests"),
-    ),
+      appBar: AppBar(
+        title: Text("My Requests & Responses"),
+      ),
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: onTabTapped,
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.insert_invitation),
+            label: 'My Requests',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.question_answer_outlined),
+            label: 'My Responses',
+          )
+        ],
+      ),
+    );
+  }
 
-      body :StreamBuilder<QuerySnapshot>(
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+}
+
+class MyRequestsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('exchanges')
           .where('targetUserId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
@@ -46,16 +78,12 @@ class _MyRequestesState extends State<MyRequestes> {
                 leading: Icon(Icons.person),
                 title: Text((exchangeData as Map<String, dynamic>)['proposerProductName']),
                 subtitle: Text((exchangeData as Map<String, dynamic>)['description']),
-                trailing: Icon(Icons.arrow_forward),
+                trailing: Text("re"),
                 onTap: () {
-                  setState(() {
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ConfermationPage()),
-                    );
-
-                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ConfermationPage(exchangeId: exchangeDoc.id)),
+                  );
                 },
                 selected: true, // Whether the ListTile is selected or not
                 enabled: true, // Whether the ListTile is enabled or not
@@ -65,7 +93,6 @@ class _MyRequestesState extends State<MyRequestes> {
           },
         );
       },
-    )
     );
   }
 }

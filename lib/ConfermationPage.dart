@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ConfermationPage extends StatefulWidget {
+
+  final String exchangeId;
+  ConfermationPage({required this.exchangeId});
   @override
   _ConfermationPageState createState() => _ConfermationPageState();
 }
@@ -21,15 +24,9 @@ class _ConfermationPageState extends State<ConfermationPage> {
                 onPressed: () {
                   FirebaseFirestore.instance
                       .collection('exchanges')
-                      .where('targetUserId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-                      .get()
-                      .then((querySnapshot) {
-                    querySnapshot.docs.forEach((doc) {
-                      FirebaseFirestore.instance
-                          .collection('exchanges')
-                          .doc(doc.id)
-                          .update({'reponse': 'je confirme'});
-                    });
+                      .doc(widget.exchangeId)
+                      .update({
+                    'reponse': 'je confirme',
                   });
                 },
                 child: Row(
@@ -39,17 +36,12 @@ class _ConfermationPageState extends State<ConfermationPage> {
                 onPressed: () {
                   FirebaseFirestore.instance
                       .collection('exchanges')
-                      .where('targetUserId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-                      .get()
-                      .then((querySnapshot) {
-                    querySnapshot.docs.forEach((doc) {
-                      FirebaseFirestore.instance
-                          .collection('exchanges')
-                          .doc(doc.id)
-                          .update({'reponse': 'je refuse'});
-                    });
+                      .doc(widget.exchangeId)
+                      .update({
+                    'reponse': 'je refuse',
                   });
                 },
+
                 child: Row(
                   children: [Text("refuse")],
                 ))
