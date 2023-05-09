@@ -24,6 +24,16 @@ class _MyResponsePagePageState extends State<MyResponsePage> {
 
         final exchangeDocs = snapshot.data!.docs;
 
+        if (exchangeDocs.isEmpty) {
+          return Center(
+            child: Column(
+              children: [
+                Text('You don\'t have any response'),
+                Icon(Icons.error_outline,size: 20,color: Colors.deepPurple,)
+              ],
+            ),
+          );
+        }
         return ListView.builder(
           itemCount: exchangeDocs.length,
           itemBuilder: (context, index) {

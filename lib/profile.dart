@@ -91,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: <Widget>[
                   CircleAvatar(
                           radius: 60.0,
-                        //  backgroundImage: NetworkImage(profileImage!),
+                          backgroundImage: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
                   ),
                   SizedBox(
                     height: 10,

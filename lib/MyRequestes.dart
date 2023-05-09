@@ -63,8 +63,17 @@ class MyRequestsPage extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-
         final exchangeDocs = snapshot.data!.docs;
+        if (exchangeDocs.isEmpty) {
+          return Center(
+            child: Column(
+              children: [
+                Text('You don\'t have any Request'),
+                Icon(Icons.error_outline,size: 20,color: Colors.deepPurple,)
+              ],
+            ),
+          );
+        }
 
         return ListView.builder(
           itemCount: exchangeDocs.length,
@@ -84,7 +93,7 @@ class MyRequestsPage extends StatelessWidget {
                     as Map<String, dynamic>)['proposerProductName']),
                 subtitle:
                     Text((exchangeData as Map<String, dynamic>)['description']),
-                trailing: Text("re"),
+                trailing: Text("er"),
                 onTap: () {
                   Navigator.push(
                     context,
