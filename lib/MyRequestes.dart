@@ -11,7 +11,7 @@ class _MyRequestesState extends State<MyRequestes> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('exchanges').where('targetUserId', isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots(),
+      stream: FirebaseFirestore.instance.collection('exchanges').where('proposerUserName', isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(

@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? email='';
   String? phonenumber='';
   String? adresse='';
-  String? profileImage ;
+  //String? profileImage ;
 
 
   Future _getdatafromdatabase() async {
@@ -91,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: <Widget>[
                   CircleAvatar(
                           radius: 60.0,
-                          backgroundImage: NetworkImage(profileImage!),
+                        //  backgroundImage: NetworkImage(profileImage!),
                   ),
                   SizedBox(
                     height: 10,
