@@ -7,6 +7,7 @@ Widget ProductItem(BuildContext context, Product product) {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   return Card(
+    elevation: 10.0,
     color: Colors.grey[300],
     shape: RoundedRectangleBorder(
       side: BorderSide(
