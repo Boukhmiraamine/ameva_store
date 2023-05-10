@@ -1,4 +1,5 @@
 import 'package:app11/mydrawer.dart';
+import 'package:app11/popUpMenu.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +21,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? email='';
   String? phonenumber='';
   String? adresse='';
+
+
   //String? profileImage ;
+
 
 
   Future _getdatafromdatabase() async {
@@ -38,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           adresse = snapshot.data()!['adresse'];
           // profileImage = snapshot.data()!['profileImageUrl'];
         });
+        final profileImageUrl = snapshot.data()!['profileImageUrl'];
       }
     });
   }
@@ -58,21 +63,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Center(
             child: const Text('Profile'),
           ),
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: const Icon(
-                  Icons.settings,
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              );
-            },
-          ),
+          // leading: Builder(
+          //   builder: (BuildContext context) {
+          //     return PopUpMenu();
+          //   },
+          // ),
+          actions: [
+            PopUpMenu()
+          ],
         ),
-        drawer: Mydrawer(),
+        // drawer: Mydrawer(),
         body: ListView(
           children: <Widget>[
             Container(
@@ -91,8 +91,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: <Widget>[
                   CircleAvatar(
                           radius: 60.0,
-                          backgroundImage: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
-                  ),
+
+                          backgroundImage: NetworkImage("https://i.ytimg.com/vi/JXMIpHDgb2A/maxresdefault.jpg"),
+                    // backgroundImage: Image.network(profileImageUrl!),
+                 ),
                   SizedBox(
                     height: 10,
                   ),
@@ -102,60 +104,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      color: Colors.deepPurple.shade300,
-                      child: ListTile(
-                        title: Text(
-                          '5000',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Followers',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      color: Colors.deepPurple,
-                      child: ListTile(
-                        title: Text(
-                          '5000',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Following',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                 ],
