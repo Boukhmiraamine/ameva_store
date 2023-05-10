@@ -195,7 +195,7 @@ class _waiting_productsState extends State<waiting_products> {
                             final product = products[index];
 
                             return GestureDetector(
-                              child: item_waiting_products(product),
+                              child: item_waiting_products(product, context),
                               onTap: () {
                                 setState(() {
                                   Navigator.push(

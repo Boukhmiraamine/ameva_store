@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 
 
-Widget item_waiting_products(Product product) {
+Widget item_waiting_products(Product product, BuildContext context) {
   return Card(
     color: Colors.grey[300],
     shape: RoundedRectangleBorder(
@@ -46,7 +46,7 @@ Widget item_waiting_products(Product product) {
                     ),
                   ),
                 ),
-                SizedBox(height: 13,),
+                SizedBox(height: 5,),
                 Row(
                   children: [
                     ElevatedButton(
@@ -71,16 +71,43 @@ Widget item_waiting_products(Product product) {
                     SizedBox(width: 10,),
                     ElevatedButton(
                       style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)),
-                      onPressed: () async {
-                        try {
-                          await FirebaseFirestore.instance
-                              .collection('waiting_products')
-                              .doc(product.id)
-                              .delete();
-                          print('Product deleted');
-                        } catch (error) {
-                          print('Error deleting product: $error');
-                        }
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Confirmation"),
+                              content: Text("Are you sure you want to delete this product ?"),
+                              actions: [
+                                TextButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text(
+                                    "Delete",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  onPressed: () async {
+                                    try {
+                                      await FirebaseFirestore.instance
+                                          .collection('waiting_products')
+                                          .doc(product.id)
+                                          .delete();
+                                      print('Product deleted');
+                                    } catch (error) {
+                                      print('Error deleting product: $error');
+                                    }
+                                    //Navigator.of(context).pop();
+                                    Navigator.popAndPushNamed(context, '/waiting_products');
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: Text("Refuse"),
                     )
