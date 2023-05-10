@@ -40,7 +40,7 @@ class _SendRequestPageState extends State<SendRequestPage> {
       'proposerProductName': widget.product.name,
       'proposerUserId': FirebaseAuth.instance.currentUser!.uid,
       'proposerUserName': proposerUserName, // Utiliser le nom d'utilisateur récupéré
-      'status': 'en attente',
+      'reponse': 'in process',
       'targetProductId': widget.targetProduct.id,
       'targetProductName': widget.targetProduct.name,
       'targetUserId': targetUserId,

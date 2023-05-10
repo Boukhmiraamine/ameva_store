@@ -41,7 +41,7 @@ class _ProductDetailState extends State<ProductDetail> {
                         border: Border.all(color: Colors.deepPurpleAccent),
                         shape: BoxShape.rectangle,
                       image: DecorationImage(
-                        image: AssetImage(widget.product.image),
+                        image: NetworkImage(widget.product.image),
                         fit: BoxFit.cover,
                       ),
                     ),

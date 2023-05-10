@@ -23,6 +23,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? adresse='';
 
 
+  //String? profileImage ;
+
+
+
   Future _getdatafromdatabase() async {
     await FirebaseFirestore.instance.collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -87,6 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: <Widget>[
                   CircleAvatar(
                           radius: 60.0,
+
                           backgroundImage: NetworkImage("https://i.ytimg.com/vi/JXMIpHDgb2A/maxresdefault.jpg"),
                     // backgroundImage: Image.network(profileImageUrl!),
                  ),
@@ -99,60 +104,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      color: Colors.deepPurple.shade300,
-                      child: ListTile(
-                        title: Text(
-                          '5000',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Followers',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      color: Colors.deepPurple,
-                      child: ListTile(
-                        title: Text(
-                          '5000',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Following',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                 ],
