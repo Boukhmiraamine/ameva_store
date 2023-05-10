@@ -1,10 +1,6 @@
 
 import 'dart:io';
-// <<<<<<< HEAD
-// =======
-
 import 'package:firebase_auth/firebase_auth.dart';
-// >>>>>>> 27f8555f145982eac650bcf40adf97d94ad51d34
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -23,7 +19,7 @@ class _AddProductPageState extends State<AddProductPage> {
   var _productColor;
   var _productCategory;
 
-  File? _imageFile;
+  File? _imageFile2;
 
   List<String> _categories = ['Electronics', 'Clothing', 'Home Goods'];
 
@@ -32,6 +28,7 @@ class _AddProductPageState extends State<AddProductPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Product'),
+        backgroundColor: Colors.deepPurple,
       ),
       body: Form(
         key: _formKey,
@@ -40,21 +37,48 @@ class _AddProductPageState extends State<AddProductPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (_imageFile != null)
-                Image.file(
-                  _imageFile!,
-                  fit: BoxFit.cover,
-                ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                child: Text('Upload Image'),
-                onPressed: () {
-                  _showImagePicker();
-                },
+              CircleAvatar(
+                radius: 70.0,
+                backgroundImage:
+                _imageFile2 == null
+                    ?NetworkImage("https://static.vecteezy.com/system/resources/previews/014/731/219/original/product-owner-line-icon-vector.jpg") as ImageProvider
+                    :FileImage(File(_imageFile2!.path)),
               ),
               SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FloatingActionButton.extended(
+                    label: Text('Upload Image'),
+                    backgroundColor: Colors.deepPurpleAccent,
+                    icon: Icon(
+                      Icons.save,
+                      size: 24.0,
+                    ),
+                    onPressed: () {
+                      _showImagePicker();
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 80.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Product Name'),
+                cursorColor: Colors.deepPurple,
+                decoration: InputDecoration(
+                    labelText: 'Product Name',
+                  labelStyle: TextStyle(color: Colors.deepPurple),
+                  focusColor: Colors.deepPurple,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.deepPurple),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 2,
+                        color: Colors.deepPurple
+                    ),
+                  ),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a product name';
@@ -67,7 +91,21 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Product Description'),
+                cursorColor: Colors.deepPurple,
+                decoration: InputDecoration(
+                  labelText: 'Product Description',
+                  labelStyle: TextStyle(color: Colors.deepPurple),
+                  focusColor: Colors.deepPurple,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.deepPurple),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 2,
+                        color: Colors.deepPurple
+                    ),
+                  ),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a product description';
@@ -80,7 +118,21 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Product Color'),
+                cursorColor: Colors.deepPurple,
+                decoration: InputDecoration(
+                  labelText: 'Product Color',
+                  labelStyle: TextStyle(color: Colors.deepPurple),
+                  focusColor: Colors.deepPurple,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.deepPurple),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 2,
+                        color: Colors.deepPurple
+                    ),
+                  ),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a product color';
@@ -93,7 +145,20 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
               SizedBox(height: 16.0),
               DropdownButtonFormField(
-                decoration: InputDecoration(labelText: 'Product Category'),
+                decoration: InputDecoration(
+                  labelText: 'Product Category',
+                  labelStyle: TextStyle(color: Colors.deepPurple),
+                  focusColor: Colors.deepPurple,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.deepPurple),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 2,
+                        color: Colors.deepPurple
+                    ),
+                  ),
+                ),
                 value: _productCategory,
                 items: _categories.map((category) {
                   return DropdownMenuItem(
@@ -114,17 +179,22 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
               ),
               SizedBox(height: 16.0),
-              ElevatedButton(
-                child: Text('Save'),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
+              Center(
+                child: ElevatedButton(
+                  child: Text('Save'),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.deepPurpleAccent)
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
 
-                    _saveProduct();
+                      _saveProduct();
 
-                    Navigator.pop(context);
-                  }
-                },
+                      Navigator.pop(context);
+                    }
+                  },
+                ),
               ),
             ],
           ),
@@ -137,7 +207,7 @@ class _AddProductPageState extends State<AddProductPage> {
     final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile!= null) {
-        _imageFile = File(pickedFile!.path);
+        _imageFile2 = File(pickedFile!.path);
       }
     });
   }
@@ -159,7 +229,7 @@ class _AddProductPageState extends State<AddProductPage> {
           .child('products')
           .child(_productName)
           .child('productImage.jpg');
-      await ref.putFile(_imageFile!);
+      await ref.putFile(_imageFile2!);
 
       final url = await ref.getDownloadURL();
       print("----------------*****************************************************");

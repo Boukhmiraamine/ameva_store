@@ -4,7 +4,7 @@ import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../AddProduct.dart';
+// import '../AddProduct.dart';
 import '../Modules/Product.dart';
 import '../ProductDetail.dart';
 //import '../filtering.dart';
@@ -66,17 +66,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddProductPage()),
-            );
-          });
-        },
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     setState(() {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => AddProductPage()),
+      //       );
+      //     });
+      //   },
+      //   child: const Icon(Icons.add),
+      // ),
       appBar: AppBar(
         title: !_showSearchBar
             ? Text(
@@ -138,7 +138,7 @@ class _HomeState extends State<Home> {
                       });
                     },
                     icon: Icon(
-                      Icons.message,
+                      Icons.notifications,
                       size: 30,
                     ),
                     // color: colorFav,
@@ -161,24 +161,24 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Expanded(
-              flex: 1,
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                         /* Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return FiltringProduct(product: listProduct);
-                          }));*/
-                        });
-                      },
-                      icon: Icon(
-                        Icons.filter_list_rounded,
-                        size: 40,
-                        color: Colors.deepPurple,
-                      )))),
+          // Expanded(
+          //     flex: 1,
+          //     child: Align(
+          //         alignment: Alignment.topLeft,
+          //         child: IconButton(
+          //             onPressed: () {
+          //               setState(() {
+          //                /* Navigator.push(context,
+          //                     MaterialPageRoute(builder: (context) {
+          //                   return FiltringProduct(product: listProduct);
+          //                 }));*/
+          //               });
+          //             },
+          //             icon: Icon(
+          //               Icons.filter_list_rounded,
+          //               size: 40,
+          //               color: Colors.deepPurple,
+          //             )))),
           SizedBox(
             height: 20,
           ),

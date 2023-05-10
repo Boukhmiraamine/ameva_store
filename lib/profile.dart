@@ -1,4 +1,5 @@
 import 'package:app11/mydrawer.dart';
+import 'package:app11/popUpMenu.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +21,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? email='';
   String? phonenumber='';
   String? adresse='';
-  String? profileImage ;
 
 
   Future _getdatafromdatabase() async {
@@ -38,6 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           adresse = snapshot.data()!['adresse'];
           // profileImage = snapshot.data()!['profileImageUrl'];
         });
+        final profileImageUrl = snapshot.data()!['profileImageUrl'];
       }
     });
   }
@@ -58,21 +59,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Center(
             child: const Text('Profile'),
           ),
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: const Icon(
-                  Icons.settings,
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              );
-            },
-          ),
+          // leading: Builder(
+          //   builder: (BuildContext context) {
+          //     return PopUpMenu();
+          //   },
+          // ),
+          actions: [
+            PopUpMenu()
+          ],
         ),
-        drawer: Mydrawer(),
+        // drawer: Mydrawer(),
         body: ListView(
           children: <Widget>[
             Container(
@@ -91,8 +87,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: <Widget>[
                   CircleAvatar(
                           radius: 60.0,
-                          backgroundImage: NetworkImage(profileImage!),
-                  ),
+                          backgroundImage: NetworkImage("https://i.ytimg.com/vi/JXMIpHDgb2A/maxresdefault.jpg"),
+                    // backgroundImage: Image.network(profileImageUrl!),
+                 ),
                   SizedBox(
                     height: 10,
                   ),
