@@ -1,3 +1,4 @@
+import 'package:app11/DetailTargetUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -92,7 +93,33 @@ class _MyResponsePagePageState extends State<MyResponsePage> {
                 ),
                 trailing:
                     Text((exchangeData as Map<String, dynamic>)['reponse']),
-                onTap: () {},
+                onTap: () {
+
+                  if((exchangeData as Map<String, dynamic>)['reponse'] == 'I refuse the exchange'){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Row(children: [Text('The Target user has refused the exchange',style: TextStyle(color: Colors.red),),
+                        Icon(Icons.dangerous_outlined)
+                        ]),
+                      ),
+                    );
+                  }else if ((exchangeData as Map<String, dynamic>)['reponse'] == 'I accept the exchange'){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DetailTargetUser()),
+                    );
+                  }else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:  Text('In process .....',style: TextStyle(color: Colors.blue),),
+                    ));
+                  }
+
+
+
+                },
                 selected: true, // Whether the ListTile is selected or not
                 enabled: true, // Whether the ListTile is enabled or not
                 dense: false, // Whether the ListTile has reduced height or not

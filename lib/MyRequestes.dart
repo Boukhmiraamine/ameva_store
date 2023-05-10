@@ -23,9 +23,19 @@ class _MyRequestesState extends State<MyRequestes> {
       appBar: AppBar(
         title: Text("My Requests & Responses"),
         backgroundColor: Colors.deepPurple,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+            // Ajoutez ici le code pour retourner à la page précédente
+          },
+        ),
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.deepPurple.shade300,
+
+
         currentIndex: _currentIndex,
         onTap: onTabTapped,
         items: [
@@ -39,10 +49,10 @@ class _MyRequestesState extends State<MyRequestes> {
           )
         ],
         selectedItemColor: Colors.deepPurple,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.white,
         selectedLabelStyle: TextStyle(fontSize: 16.0),
         unselectedLabelStyle: TextStyle(fontSize: 14.0),
-        backgroundColor: Colors.white,
+
         elevation: 10,
         type: BottomNavigationBarType.fixed,
       ),

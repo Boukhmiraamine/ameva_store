@@ -125,8 +125,6 @@ class _HomeState extends State<Home> {
                   padding: EdgeInsets.all(5),
                   child: IconButton(
                     onPressed: () {
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (c) => Home()));
                       setState(() {
 
                         Navigator.push(
@@ -150,7 +148,7 @@ class _HomeState extends State<Home> {
                   height: 20,
                   child: Center(
                     child: Text(
-                      "1",
+                      "",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   )),
