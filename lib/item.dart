@@ -95,33 +95,19 @@ Widget ProductItem(BuildContext context, Product product) {
                       },
                     ),
 
-
-                    Row(
-                      children: [
-                        Text(
-                          "",
-                          style: TextStyle(fontSize: 19),
-                        ),
-                        /*  Text(
-                          "${Product.category} ",
-                          style: TextStyle(
-                            fontSize: 19,
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),*/
-                      ],
-                    ),
                   ],
                 ),
               )
             ],
           ),
-          Flexible(
+          Padding(
+            padding: const EdgeInsets.only(top:8.0),
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor:
-                MaterialStateProperty.all<Color>(Colors.deepPurple.shade300),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple.shade300),
+                fixedSize: MaterialStateProperty.all<Size>(
+                  Size(180, 40), // set width and height here
+                ),
               ),
               onPressed: () {
                 print("****************************************");
@@ -136,9 +122,9 @@ Widget ProductItem(BuildContext context, Product product) {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Icon(Icons.send),
+                    child: Icon(Icons.change_circle_outlined),
                   ),
-                  Text("exchange", style: TextStyle(fontSize: 20)),
+                  Text("Exchange", style: TextStyle(fontSize: 20)),
                 ],
               ),
             ),
