@@ -36,8 +36,22 @@ class _MyProductsOnlyState extends State<MyProductsOnly> {
         body: Column(
           children:[
           Expanded(
-            flex: 1,
-            child:Text("MyProcucts")
+            flex: 2,
+            child:Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                'My Products',
+                style: TextStyle(
+                  fontFamily: 'Arial',
+                  fontSize: 36,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2.0,
+                  // add more properties here as desired
+                ),
+              ),
+            ),
+
 
           ),
 
@@ -47,6 +61,8 @@ class _MyProductsOnlyState extends State<MyProductsOnly> {
             flex: 20,
 
             child: StreamBuilder<QuerySnapshot>(
+
+
 
                 stream: FirebaseFirestore.instance
                     .collection('products')

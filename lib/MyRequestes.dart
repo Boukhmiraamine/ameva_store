@@ -23,9 +23,19 @@ class _MyRequestesState extends State<MyRequestes> {
       appBar: AppBar(
         title: Text("My Requests & Responses"),
         backgroundColor: Colors.deepPurple,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+            // Ajoutez ici le code pour retourner à la page précédente
+          },
+        ),
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.deepPurple.shade300,
+
+
         currentIndex: _currentIndex,
         onTap: onTabTapped,
         items: [
@@ -39,10 +49,10 @@ class _MyRequestesState extends State<MyRequestes> {
           )
         ],
         selectedItemColor: Colors.deepPurple,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.white,
         selectedLabelStyle: TextStyle(fontSize: 16.0),
         unselectedLabelStyle: TextStyle(fontSize: 14.0),
-        backgroundColor: Colors.white,
+
         elevation: 10,
         type: BottomNavigationBarType.fixed,
       ),
@@ -71,8 +81,17 @@ class MyRequestsPage extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-
         final exchangeDocs = snapshot.data!.docs;
+        if (exchangeDocs.isEmpty) {
+          return Center(
+            child: Column(
+              children: [
+                Text('You don\'t have any Request'),
+                Icon(Icons.error_outline,size: 20,color: Colors.deepPurple,)
+              ],
+            ),
+          );
+        }
 
         return ListView.builder(
 
@@ -89,6 +108,14 @@ class MyRequestsPage extends StatelessWidget {
               ),
               color: Colors.grey[300], // ajout de la couleur de fond grise
               child: ListTile(
+/*
+                leading: Icon(Icons.person),
+                title: Text((exchangeData
+                    as Map<String, dynamic>)['proposerProductName']),
+                subtitle:
+                    Text((exchangeData as Map<String, dynamic>)['description']),
+                trailing: Text("er"),
+*/
                 contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0), // ajout du padding du contenu
                 leading: FutureBuilder<DocumentSnapshot>(
                   future: FirebaseFirestore.instance.collection('products').doc((exchangeData as Map<String, dynamic>)['proposerProductId']).get(),
@@ -139,6 +166,7 @@ class MyRequestsPage extends StatelessWidget {
                     );
                   },
                 ),
+
                 onTap: () {
                   Navigator.push(
                     context,
