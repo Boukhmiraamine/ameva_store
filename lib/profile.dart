@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? email='';
   String? phonenumber='';
   String? adresse='';
-  String? profileImage='' ;
+  String profileImage='' ;
 
 
 
@@ -93,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           radius: 60.0,
 
                           // backgroundImage: NetworkImage("https://i.ytimg.com/vi/JXMIpHDgb2A/maxresdefault.jpg"),
-                    backgroundImage: NetworkImage(profileImage!),
+                    backgroundImage: NetworkImage(profileImage??""),
                  ),
                   SizedBox(
                     height: 10,
