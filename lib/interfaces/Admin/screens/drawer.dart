@@ -1,4 +1,6 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'users.dart';
 
 import 'package:flutter/material.dart';
@@ -116,6 +118,7 @@ class MyDrawerState extends State<MyDrawer> {
       title: Text('Log Out'),
       trailing: Icon(Icons.arrow_right),
       onTap: () {
+        FirebaseAuth.instance.signOut();
         Navigator.popAndPushNamed(context, '/logout');
       },
     );

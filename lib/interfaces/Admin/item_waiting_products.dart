@@ -77,7 +77,7 @@ Widget item_waiting_products(Product product, BuildContext context) {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text("Confirmation"),
-                              content: Text("Are you sure you want to delete this product ?"),
+                              content: Text("Are you sure you want to refuse this product ?"),
                               actions: [
                                 TextButton(
                                   child: Text("Cancel"),
@@ -87,7 +87,7 @@ Widget item_waiting_products(Product product, BuildContext context) {
                                 ),
                                 TextButton(
                                   child: Text(
-                                    "Delete",
+                                    "Refuse",
                                     style: TextStyle(color: Colors.red),
                                   ),
                                   onPressed: () async {

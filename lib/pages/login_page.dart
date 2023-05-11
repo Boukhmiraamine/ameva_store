@@ -1,3 +1,4 @@
+import 'package:app11/interfaces/Admin/Admin_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,28 +30,36 @@ class _LoginPageState extends State<LoginPage> {
 
   Future signIn() async{
     if (_formkey.currentState!.validate()) {
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
-      } catch (e) {
-        // Afficher un message d'erreur stylé
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Erreur d'authentification"),
-              content: Text("L'email ou le mot de passe est incorrect. Veuillez réessayer."),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 'OK'),
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
+      if(_emailController.text.trim() == 'admin01@gmail.com'
+          && _passwordController.text.trim() == '123456'){
+        //Rédiriger vers le tableau de bord
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminScreen()));
+      }
+      else {
+        try {
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          );
+
+        } catch (e) {
+          // Afficher un message d'erreur stylé
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Erreur d'authentification"),
+                content: Text("L'email ou le mot de passe est incorrect. Veuillez réessayer."),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'OK'),
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
       }
     }
   }
