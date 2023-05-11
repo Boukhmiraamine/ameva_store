@@ -1,17 +1,11 @@
 
+import 'package:app11/interfaces/Admin/admin_productDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../Modules/Product.dart';
-import '../../../ProductDetail.dart';
 import 'drawer.dart';
-//import 'package:app_drawer/screens/product.dart';
-
-//import 'package:app_drawer/utilis/trimName.dart';
-import '../widgets/utilwidgets.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import '../utils/constants.dart' as Constants;
 
 class ApprovedProducts extends StatefulWidget {
   @override
@@ -76,7 +70,7 @@ class _ApprovedProductsState extends State<ApprovedProducts> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  ProductDetail(product: product)),
+                                  AProductDetail(product: product)),
                         );
                       });
                     },
@@ -151,7 +145,7 @@ Widget getApprovedProducts(Product product,BuildContext context){
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) =>
-                                ProductDetail(product: product)),
+                                AProductDetail(product: product)),
                           );
                         },
                         child: Text("Details")

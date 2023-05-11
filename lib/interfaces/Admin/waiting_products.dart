@@ -1,15 +1,11 @@
 import 'package:app11/interfaces/Admin/screens/drawer.dart';
-import 'package:badges/badges.dart';
+import 'package:app11/interfaces/Admin/waiting_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../Modules/Product.dart';
-import '../../ProductDetail.dart';
-//import '../../filtering.dart';
 
-import 'package:badges/src/badge.dart' as badge;
 
 import 'item_waiting_products.dart';
-import 'models/usermodel.dart';
 
 class waiting_products extends StatefulWidget {
   const waiting_products({Key? key}) : super(key: key);
@@ -102,40 +98,6 @@ class _waiting_productsState extends State<waiting_products> {
               });
             },
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-            child: badge.Badge(
-              position: BadgePosition.topEnd(top: 1, end: 1),
-              child: Card(
-                borderOnForeground: false,
-                color: Colors.deepPurple,
-                child: Padding(
-                  padding: EdgeInsets.all(5),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (c) => waiting_products()));
-                      setState(() {});
-                    },
-                    icon: Icon(
-                      Icons.shopping_cart,
-                      size: 30,
-                    ),
-                    // color: colorFav,
-                  ),
-                ),
-              ),
-              badgeContent: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: Center(
-                    child: Text(
-                      "1",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  )),
-            ),
-          ),
         ],
       ),
       backgroundColor: Colors.white,
@@ -202,7 +164,7 @@ class _waiting_productsState extends State<waiting_products> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ProductDetail(product: product)),
+                                            AWProductDetail(product: product)),
                                   );
                                 });
                               },

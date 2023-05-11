@@ -20,7 +20,7 @@ class FirstInterface extends StatefulWidget {
 
 
 
-var _interfaces = [Home(), Profile(),AddProductPage(), About(), AdminScreen()];
+var _interfaces = [Home(), Profile(),AddProductPage(), About()];
 
 
 int _currentIndex = 0;
@@ -55,7 +55,6 @@ class _FirstInterfaceState extends State<FirstInterface> {
             Icon(Icons.person ,color: Colors.white,),
             Icon(Icons.add,color: Colors.white,size: 35,),
             Icon(Icons.help,color: Colors.white,),
-            Icon(Icons.admin_panel_settings_sharp,color: Colors.white,),
             /*BottomNavigationBarItem(
               icon: Icon(Icons.home,),
               label: 'Home',
