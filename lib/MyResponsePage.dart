@@ -108,7 +108,7 @@ class _MyResponsePagePageState extends State<MyResponsePage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              DetailTargetUser()),
+                              DetailTargetUser(exchangeId: exchangeDoc.id)),
                     );
                   }else{
                     ScaffoldMessenger.of(context).showSnackBar(

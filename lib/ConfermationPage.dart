@@ -41,7 +41,7 @@ class _ConfermationPageState extends State<ConfermationPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "My Request",
+                      "more informations",
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     SizedBox(height: 8.0),
@@ -93,6 +93,11 @@ class _ConfermationPageState extends State<ConfermationPage> {
                     ),
 
                     SizedBox(height: 4.0),
+                    Text(
+                      "Proposer User Name: ${data['proposerUserName']}",
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    SizedBox(height: 8.0),
                     Text(
                       "Proposer User Name: ${data['proposerUserName']}",
                       style: Theme.of(context).textTheme.subtitle1,
