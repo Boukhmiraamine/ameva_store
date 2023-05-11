@@ -1,4 +1,5 @@
 import 'package:app11/MyRequestes.dart';
+//import 'package:app11/interfaces/AddProduct.dart';
 import 'package:app11/interfaces/Admin/models/usermodel.dart';
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -68,6 +69,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
@@ -127,8 +129,6 @@ class _HomeState extends State<Home> {
                   padding: EdgeInsets.all(5),
                   child: IconButton(
                     onPressed: () {
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (c) => Home()));
                       setState(() {
 
                         Navigator.push(
@@ -152,7 +152,7 @@ class _HomeState extends State<Home> {
                   height: 20,
                   child: Center(
                     child: Text(
-                      "1",
+                      "",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   )),

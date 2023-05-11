@@ -1,5 +1,6 @@
 // import 'package:app11/interfaces/Admin/Admin_Screen.dart';
 import 'package:app11/interfaces/Admin/Admin_Screen.dart';
+import 'package:app11/profile.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,9 @@ class FirstInterface extends StatefulWidget {
 }
 
 
-var _interfaces = [Home(), Profile(),AddProductPage(), About(), AdminScreen()];
+
+var _interfaces = [Home(), ProfileScreen(),AddProductPage(), About()];
+
 
 int _currentIndex = 0;
 
@@ -53,7 +56,6 @@ class _FirstInterfaceState extends State<FirstInterface> {
             Icon(Icons.person ,color: Colors.white,),
             Icon(Icons.add,color: Colors.white,size: 35,),
             Icon(Icons.help,color: Colors.white,),
-            Icon(Icons.admin_panel_settings_sharp,color: Colors.white,),
             /*BottomNavigationBarItem(
               icon: Icon(Icons.home,),
               label: 'Home',

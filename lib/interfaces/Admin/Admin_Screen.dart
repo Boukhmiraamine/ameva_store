@@ -9,6 +9,7 @@ import 'package:app11/interfaces/Admin/waiting_products.dart';
 import 'package:app11/main.dart';
 import 'package:flutter/material.dart';
 
+import '../../login.dart';
 import '../Category.dart';
 
 class AdminScreen extends StatefulWidget {
@@ -38,7 +39,7 @@ class _AdminScreenState extends State<AdminScreen> {
         "/approved": (BuildContext context) => ApprovedProducts(),
 
         "/users": (BuildContext context) => UserScreen(),
-        "/logout":(BuildContext context)=>Home(),
+        "/logout":(BuildContext context)=>Login(),
 
       },
     );

@@ -1,7 +1,9 @@
 import 'package:app11/Modules/Product.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 Widget MyProductsItem(Product Product) {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   return Card(
     color: Colors.grey[300],
     shape: RoundedRectangleBorder(
@@ -53,28 +55,43 @@ Widget MyProductsItem(Product Product) {
                         style: TextStyle(
                             fontSize: 20, color: Colors.black,fontWeight: FontWeight.bold),
                       ),
-                      Text(
-
-                        "Category: #${Product.category}",
+                      Text("Category :"+
+                        Product.category,
                         style: TextStyle(
-                            fontSize: 15, color: Colors.black54,fontWeight: FontWeight.bold),
+                            fontSize: 20, color: Colors.black,fontWeight: FontWeight.bold),
                       ),
-                      Row(
-                        children: [
-                          Text(
+                      FutureBuilder<DocumentSnapshot>(
+                        future: firestore.collection('products').doc(Product.id).get(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Text('Loading...');
+                          }
 
-                            "",
-                            style: TextStyle(fontSize: 19),
+                          var data = snapshot.data!.data() as Map<String, dynamic>;
+                          var userId = data['user_id'];
 
-                          ),
-                          Text(
+                          return FutureBuilder<DocumentSnapshot>(
+                            future: firestore.collection('users').doc(userId).get(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return Text('Loading...');
+                              }
 
-                            "${Product.category} Dhs",
-                            style: TextStyle(fontSize: 19, color: Colors.red,fontWeight: FontWeight.bold),
+                              var userData = snapshot.data!.data() as Map<String, dynamic>;
+                              var firstName = userData['first name'];
+                              var lastname = userData['last name'];
 
-
-                          ),
-                        ],
+                              return Text(
+                                "added by : $firstName $lastname",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
 
 

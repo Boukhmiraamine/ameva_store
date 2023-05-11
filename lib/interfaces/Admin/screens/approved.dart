@@ -1,17 +1,11 @@
 
+import 'package:app11/interfaces/Admin/admin_productDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../Modules/Product.dart';
-import '../../../ProductDetail.dart';
 import 'drawer.dart';
-//import 'package:app_drawer/screens/product.dart';
-
-//import 'package:app_drawer/utilis/trimName.dart';
-import '../widgets/utilwidgets.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import '../utils/constants.dart' as Constants;
 
 class ApprovedProducts extends StatefulWidget {
   @override
@@ -76,7 +70,7 @@ class _ApprovedProductsState extends State<ApprovedProducts> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  ProductDetail(product: product)),
+                                  AProductDetail(product: product)),
                         );
                       });
                     },
@@ -124,7 +118,7 @@ Widget getApprovedProducts(Product product,BuildContext context){
                       color: Colors.black54,
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(height: 2,),
                 Container(
                   height: 200,
                   width: 200,
@@ -140,7 +134,6 @@ Widget getApprovedProducts(Product product,BuildContext context){
                     ),
                   ),
                 ),
-                SizedBox(height: 5,),
                 Row(
                   children: [
                     ElevatedButton(
@@ -152,7 +145,7 @@ Widget getApprovedProducts(Product product,BuildContext context){
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) =>
-                                ProductDetail(product: product)),
+                                AProductDetail(product: product)),
                           );
                         },
                         child: Text("Details")
@@ -163,12 +156,39 @@ Widget getApprovedProducts(Product product,BuildContext context){
                           fixedSize: const MaterialStatePropertyAll<Size>(Size(80,20)),
                           backgroundColor: MaterialStatePropertyAll<Color>(Colors
                               .red)),
-                      onPressed: () async {
-                        await FirebaseFirestore.instance
-                            .collection('products')
-                            .doc(product.id)
-                            .delete();
-                        print('Product deleted');
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Confirmation"),
+                              content: Text("Are you sure you want to delete this product ?"),
+                              actions: [
+                                TextButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text(
+                                    "Delete",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  onPressed: () async {
+                                    await FirebaseFirestore.instance
+                                        .collection('products')
+                                        .doc(product.id)
+                                        .delete();
+                                    print('Product deleted');
+                                    //Navigator.of(context).pop();
+                                    Navigator.popAndPushNamed(context, '/approved');
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: Text("Delete"),
                     ),

@@ -1,3 +1,5 @@
+
+import 'dart:io';
 import 'package:app11/mydrawer.dart';
 import 'package:app11/popUpMenu.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -21,9 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? email='';
   String? phonenumber='';
   String? adresse='';
-
-
-  //String? profileImage ;
+  String? profileImage='' ;
 
 
 
@@ -40,9 +40,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           email = snapshot.data()!['email'];
           phonenumber = snapshot.data()!['phone'];
           adresse = snapshot.data()!['adresse'];
-          // profileImage = snapshot.data()!['profileImageUrl'];
+          profileImage = snapshot.data()!['profileImageUrl'];
         });
-        final profileImageUrl = snapshot.data()!['profileImageUrl'];
+        // final profileImageUrl = snapshot.data()!['profileImageUrl'];
       }
     });
   }
@@ -92,8 +92,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CircleAvatar(
                           radius: 60.0,
 
-                          backgroundImage: NetworkImage("https://i.ytimg.com/vi/JXMIpHDgb2A/maxresdefault.jpg"),
-                    // backgroundImage: Image.network(profileImageUrl!),
+                          // backgroundImage: NetworkImage("https://i.ytimg.com/vi/JXMIpHDgb2A/maxresdefault.jpg"),
+                    backgroundImage: NetworkImage(profileImage!),
                  ),
                   SizedBox(
                     height: 10,
