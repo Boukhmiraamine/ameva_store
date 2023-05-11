@@ -107,7 +107,7 @@ class _ConfermationPageState extends State<ConfermationPage> {
                                 .collection('exchanges')
                                 .doc(widget.exchangeId)
                                 .update({
-                              'reponse': 'je confirme',
+                              'reponse': 'I accept the exchange',
                             });
                           },
                           icon: Icon(Icons.check),
@@ -125,7 +125,7 @@ class _ConfermationPageState extends State<ConfermationPage> {
                                 .collection('exchanges')
                                 .doc(widget.exchangeId)
                                 .update({
-                              'reponse': 'je refuse',
+                              'reponse': 'I refuse the exchange',
                             });
                           },
                           icon: Icon(Icons.cancel),
