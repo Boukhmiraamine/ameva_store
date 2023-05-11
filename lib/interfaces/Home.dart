@@ -11,6 +11,8 @@ import '../ProductDetail.dart';
 import '../item.dart';
 import 'package:badges/src/badge.dart' as badge;
 
+import 'AddProduct.dart';
+
 
 
 class Home extends StatefulWidget {
@@ -66,17 +68,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     setState(() {
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(builder: (context) => AddProductPage()),
-      //       );
-      //     });
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddProductPage()),
+            );
+          });
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: !_showSearchBar
             ? Text(
