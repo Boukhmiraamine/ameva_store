@@ -42,7 +42,11 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future signUp() async {
+
+
     if (passwordConfirmed()) {
+
+      print("tapp");
       //create user
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
@@ -463,6 +467,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.symmetric(horizontal:25.0),
                 child: GestureDetector(
                   onTap: signUp,
+
+
                   /*(){
                     if(_formkey.currentState!.validate()) {
                     print("login");

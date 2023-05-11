@@ -21,7 +21,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
   File? _imageFile2;
 
-  List<String> _categories = ['Electronics', 'Sport', 'Home Goods','Study','Alimentation','Other'];
+  List<String> _categories = ['Electronics', 'Clothing', 'Home Goods'];
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class _AddProductPageState extends State<AddProductPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CircleAvatar(
-                radius: 100.0,
+                radius: 70.0,
                 backgroundImage:
                 _imageFile2 == null
                     ?NetworkImage("https://static.vecteezy.com/system/resources/previews/014/731/219/original/product-owner-line-icon-vector.jpg") as ImageProvider
@@ -62,7 +62,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 60.0),
+              SizedBox(height: 80.0),
               TextFormField(
                 cursorColor: Colors.deepPurple,
                 decoration: InputDecoration(
@@ -117,7 +117,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
               ),
               SizedBox(height: 16.0),
-             /* TextFormField(
+              TextFormField(
                 cursorColor: Colors.deepPurple,
                 decoration: InputDecoration(
                   labelText: 'Product Color',
@@ -142,7 +142,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 onSaved: (value) {
                   _productColor = value;
                 },
-              ),*/
+              ),
               SizedBox(height: 16.0),
               DropdownButtonFormField(
                 decoration: InputDecoration(

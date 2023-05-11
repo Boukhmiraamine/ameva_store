@@ -1,3 +1,4 @@
+
 import 'package:app11/Modules/Product.dart';
 import 'package:app11/interfaces/Admin/models/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -52,9 +53,9 @@ Widget item_waiting_products(Product product, BuildContext context) {
                     ElevatedButton(
                       style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)),
                       onPressed: () async {
-                        _saveProduct(product);
 
 
+                        _saveProduct(product,context);
 
                         await FirebaseFirestore.instance
                             .collection('waiting_products')
@@ -122,14 +123,19 @@ Widget item_waiting_products(Product product, BuildContext context) {
   );
 }
 
-void _saveProduct(Product product) async {
+void _saveProduct(Product product,context) async {
   // Get a reference to the Firestore collection
   final productCollection = FirebaseFirestore.instance.collection('products');
   final user = FirebaseAuth.instance.currentUser;
   if (user == null) {
     // L'utilisateur n'est pas connecté, traiter le cas d'erreur
+    print("user is not connected");
+
+    print("check ${user}");
     return;
   }
+
+
   try {
     // Create a new document and set its fields
     await productCollection.add({
@@ -143,6 +149,11 @@ void _saveProduct(Product product) async {
       'user_id': user.uid, // Ajouter l'ID de l'utilisateur ici
     });
     print('Product saved successfully!');
+    print("check try ${user}");
+  ScaffoldMessenger.of(context).showSnackBar(
+  SnackBar(
+  content: Text('Your product is in the products list'),
+  ),);
   } catch (e) {
     print('Error saving product: $e');
   }

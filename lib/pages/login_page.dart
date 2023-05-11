@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-import '../services/auth_service.dart';
-import '../square_tile_Google.dart';
 import 'Forgot_pw_page.dart';
 
 
@@ -29,39 +27,24 @@ class _LoginPageState extends State<LoginPage> {
 
 
   Future signIn() async{
-    if (_formkey.currentState!.validate()) {
-      if(_emailController.text.trim() == 'admin01@gmail.com'
-          && _passwordController.text.trim() == '123456'){
-        //Rédiriger vers le tableau de bord
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminScreen()));
-      }
-      else {
-        try {
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-          );
+/*
+    if(_emailController.text == 'admin01@gmail.com'
+        && _passwordController.text == '123456'){
+      //Rédiriger vers le tableau de bord
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminScreen()));
+    }else{}
 
-        } catch (e) {
-          // Afficher un message d'erreur stylé
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text("Erreur d'authentification"),
-                content: Text("L'email ou le mot de passe est incorrect. Veuillez réessayer."),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'OK'),
-                    child: const Text('OK'),
-                  ),
-                ],
-              );
-            },
-          );
-        }
-      }
+*/
+    if(_formkey.currentState!.validate()){
+
+      await FirebaseAuth.instance.signInWithEmailAndPassword
+        (
+
+        email:_emailController.text.trim(),
+        password:_passwordController.text.trim(),
+      );
     }
+
   }
   @override
   void dispose(){
@@ -81,13 +64,13 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Icon(Icons.android,size: 100,),
-              SizedBox(height: 20),
+              SizedBox(height: 90,),
               //Hello
               SizedBox(
                 height: 190,
                 width: 190,
                 child:
-                Lottie.asset('images/loginlottie.json'),
+                Lottie.asset('assets/images/loginlottie.json'),
               ),
               Text("Commencer sur Ameva Store!", style: TextStyle(fontWeight:FontWeight.bold,fontSize: 23.0),),
               SizedBox(height: 7.0,),
@@ -96,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle( fontSize: 18,),
               ),
 
-              SizedBox(height: 20,),
+              SizedBox(height: 30,),
               //email textfield
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal:25.0),
@@ -235,7 +218,6 @@ class _LoginPageState extends State<LoginPage> {
                     if(_formkey.currentState!.validate()) {
                     print("login");
                     signIn;
-
                     }
                 },*/
                   child: Container(
@@ -252,55 +234,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-
-              // continuer avecGOOGLE
-              SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: [
-                    Expanded(child: Divider(
-                      thickness: 0.5,
-                      color: Colors.grey[400],
-                    )
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text("ou continuer avec",style: TextStyle(color:Colors.grey[700]),),
-                    ),
-                    Expanded(child: Divider(
-                      thickness: 0.5,
-                      color: Colors.grey[700],
-                    )
-                    ),
-
-                  ],
-                ),
-              ),
-              SizedBox(height: 15,),
-              //google sign in button
-                 Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SquareTile(
-                    onTap: ()=> AuthService().signInWithGoogle(),
-                    imagePath: "assets/images/google.png",),
-                ],
-              ),
-
-              //google button
-              SizedBox(height: 35,),
+              SizedBox(height: 25,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-
                 children: [
-
                   Text("Vous n'avez pas de compte ? ",style: TextStyle(fontWeight: FontWeight.bold),),
                   GestureDetector(onTap: widget.showRegisterPage,
                       child: Text("S'inscrire ",
                         style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),
-                      )
-                  ),
+                      )),
 
                 ],
               )
