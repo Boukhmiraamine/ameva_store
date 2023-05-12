@@ -21,7 +21,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
   File? _imageFile2;
 
-  List<String> _categories = ['Electronics', 'Clothing', 'Home Goods'];
+  List<String> _categories = ['Electronics', 'Clothing', 'Home Goods','Sport','Study','Books','','','Other'];
 
   @override
   Widget build(BuildContext context) {

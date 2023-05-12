@@ -32,7 +32,9 @@ class _SendRequestPageState extends State<SendRequestPage> {
     // Récupérer le document utilisateur correspondant à l'ID de l'utilisateur ciblé
     final targetUserDoc = await _firestore.collection('users').doc(targetUserId).get();
     final targetUserName = targetUserDoc.get('first name');
-
+    // Récupérer le document utilisateur correspondant à l'ID de l'utilisateur ciblé
+    final PropIdDac = await _firestore.collection('users').doc(targetUserId).get();
+    final PropId = PropIdDac.get('phone');
     await newDocRef.set({
       'createdOn': DateTime.now().toString(),
       'id': newDocId,
@@ -46,6 +48,7 @@ class _SendRequestPageState extends State<SendRequestPage> {
       'targetUserId': targetUserId,
       'targetUserName': targetUserName, // Utiliser le nom d'utilisateur ciblé récupéré
       'description': _descriptionController.text,
+      'phoneprop': PropId,
     });
 
     // Afficher un snackbar pour indiquer que la demande a été envoyée

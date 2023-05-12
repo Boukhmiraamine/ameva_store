@@ -16,7 +16,7 @@ class _DetailTargetUserState extends State<DetailTargetUser> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Confermation"),
+          title: Text("You Can Now Contact The Target User"),
         ),
         body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
@@ -97,6 +97,10 @@ class _DetailTargetUserState extends State<DetailTargetUser> {
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   SizedBox(height: 8.0),
+                  Text(
+                    "Phone Of Target User: ${data['phoneprop']}",
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
 
                     ],
                   ),

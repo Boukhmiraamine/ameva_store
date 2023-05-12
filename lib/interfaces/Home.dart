@@ -228,7 +228,7 @@ class _HomeState extends State<Home> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 0,
-                        mainAxisExtent: 330,
+                        mainAxisExtent: 340,
                       ));
                 }),
           ),
