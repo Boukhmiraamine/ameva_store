@@ -7,33 +7,43 @@ class SendRequestPage extends StatefulWidget {
   final Product product;
   final Product targetProduct;
 
-  const SendRequestPage({Key? key, required this.product,required this.targetProduct}) : super(key: key);
+  const SendRequestPage(
+      {Key? key, required this.product, required this.targetProduct})
+      : super(key: key);
   @override
   State<SendRequestPage> createState() => _SendRequestPageState();
 }
 
 class _SendRequestPageState extends State<SendRequestPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final TextEditingController _descriptionController = TextEditingController();
-
+  final TextEditingController _descriptionController =
+      TextEditingController(text: "I want to exchange ");
 
   void _sendRequest() async {
     final newDocRef = _firestore.collection('exchanges').doc();
     final newDocId = newDocRef.id;
 
     // Récupérer le document utilisateur correspondant à l'ID de l'utilisateur actuel
-    final userDoc = await _firestore.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+    final userDoc = await _firestore
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
     final proposerUserName = userDoc.get('first name');
 
     // Récupérer le document produit correspondant à l'ID du produit ciblé
-    final targetProductDoc = await _firestore.collection('products').doc(widget.targetProduct.id).get();
+    final targetProductDoc = await _firestore
+        .collection('products')
+        .doc(widget.targetProduct.id)
+        .get();
     final targetUserId = targetProductDoc.get('user_id');
 
     // Récupérer le document utilisateur correspondant à l'ID de l'utilisateur ciblé
-    final targetUserDoc = await _firestore.collection('users').doc(targetUserId).get();
+    final targetUserDoc =
+        await _firestore.collection('users').doc(targetUserId).get();
     final targetUserName = targetUserDoc.get('first name');
     // Récupérer le document utilisateur correspondant à l'ID de l'utilisateur ciblé
-    final PropIdDac = await _firestore.collection('users').doc(targetUserId).get();
+    final PropIdDac =
+        await _firestore.collection('users').doc(targetUserId).get();
     final PropId = PropIdDac.get('phone');
     await newDocRef.set({
       'createdOn': DateTime.now().toString(),
@@ -41,12 +51,14 @@ class _SendRequestPageState extends State<SendRequestPage> {
       'proposerProductId': widget.product.id,
       'proposerProductName': widget.product.name,
       'proposerUserId': FirebaseAuth.instance.currentUser!.uid,
-      'proposerUserName': proposerUserName, // Utiliser le nom d'utilisateur récupéré
+      'proposerUserName':
+          proposerUserName, // Utiliser le nom d'utilisateur récupéré
       'reponse': 'in process',
       'targetProductId': widget.targetProduct.id,
       'targetProductName': widget.targetProduct.name,
       'targetUserId': targetUserId,
-      'targetUserName': targetUserName, // Utiliser le nom d'utilisateur ciblé récupéré
+      'targetUserName':
+          targetUserName, // Utiliser le nom d'utilisateur ciblé récupéré
       'description': _descriptionController.text,
       'phoneprop': PropId,
     });
@@ -59,7 +71,6 @@ class _SendRequestPageState extends State<SendRequestPage> {
     // Revenir à l'écran précédent
     Navigator.pop(context);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +97,7 @@ class _SendRequestPageState extends State<SendRequestPage> {
                   child: TextField(
                     controller: _descriptionController,
                     decoration: InputDecoration(
-                      labelText: 'Description',
+                      labelText: 'Message :',
                       border: OutlineInputBorder(),
                     ),
                     maxLines: null,
@@ -97,18 +108,22 @@ class _SendRequestPageState extends State<SendRequestPage> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0.8, 0, 0.8, 0.8),
                     child: SizedBox(
-                      width: 150,
-                      height: 30,
+
                       child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.deepPurple),
-                        ),
+                        style :ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple.shade300),
+                      fixedSize: MaterialStateProperty.all<Size>(
+                        Size(180, 40), // set width and height here
+                      ),
+                    ),
                         onPressed: _sendRequest,
                         child: Row(
                           children: [
-                            Icon(Icons.add_circle_outlined),
-                            Text(" Send")
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              child: Icon(Icons.send),
+                            ),
+                            Text("Send Request", style: TextStyle(fontSize: 20)),
                           ],
                         ),
                       ),

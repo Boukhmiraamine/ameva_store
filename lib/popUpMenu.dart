@@ -1,3 +1,4 @@
+import 'package:app11/interfaces/Admin/Admin_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,9 @@ class _PopUpMenuState extends State<PopUpMenu> {
           Navigator.push(context, MaterialPageRoute(builder: (context) => EditUserDataForm(userId: FirebaseAuth.instance.currentUser!.uid)));
         } else if (value == 'Page 2') {
           FirebaseAuth.instance.signOut();
+        }else if (value == 'Page') {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AdminScreen()));
+
         }
       },
       itemBuilder: (BuildContext context) => [
@@ -35,6 +39,10 @@ class _PopUpMenuState extends State<PopUpMenu> {
         PopupMenuItem(
           value: 'Page 2',
           child: Text('Log Out'),
+        ),
+        PopupMenuItem(
+          value: 'Page',
+          child: Text('..'),
         ),
       ],
     );
